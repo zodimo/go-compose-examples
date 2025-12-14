@@ -6,7 +6,7 @@ toolchain go1.24.11
 
 require (
 	gioui.org v0.9.0
-	github.com/zodimo/go-compose v0.1.4
+	github.com/zodimo/go-compose v0.1.5
 )
 
 require (

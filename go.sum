@@ -15,6 +15,8 @@ github.com/zodimo/go-compose v0.1.3 h1:fCS9AuHlyYOnFI+V9UDsoSFSlTo5Vlya5xqlZEmiR
 github.com/zodimo/go-compose v0.1.3/go.mod h1:L+Z0RNqEHszN1gWRW7+kzDgQpoJ4rXey+t28KWSehiE=
 github.com/zodimo/go-compose v0.1.4 h1:Yzh6T2BLo+ILPnkPoyP7y/s/tpm71+QrELaeyZcgSUE=
 github.com/zodimo/go-compose v0.1.4/go.mod h1:L+Z0RNqEHszN1gWRW7+kzDgQpoJ4rXey+t28KWSehiE=
+github.com/zodimo/go-compose v0.1.5 h1:10x2sb/p8pQc+JiG/xn8C4ct4JFeFBIynrKIipN2Vzw=
+github.com/zodimo/go-compose v0.1.5/go.mod h1:L+Z0RNqEHszN1gWRW7+kzDgQpoJ4rXey+t28KWSehiE=
 github.com/zodimo/go-maybe v0.1.3 h1:wEGtaSPkhTza+b0S+7J8C5nzkEB8KOoUK2dnQqA4ZEE=
 github.com/zodimo/go-maybe v0.1.3/go.mod h1:xEqMthQw8lMcDFUWXBmrixQAhUL4SQBTqOQ5D/AlNyE=
 golang.org/x/exp v0.0.0-20250711185948-6ae5c78190dc h1:TS73t7x3KarrNd5qAipmspBDS1rkMcgVG/fS1aRb4Rc=
