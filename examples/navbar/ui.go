@@ -68,7 +68,6 @@ func UI() api.Composable {
 								func(c api.Composer) api.Composer {
 									return m3text.Text(item.Label, m3text.TypestyleLabelMedium)(c)
 								},
-								navigationbar.EmptyModifier,
 							)(c)
 						}
 						return c
