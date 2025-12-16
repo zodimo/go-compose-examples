@@ -196,6 +196,11 @@ func (s *TodoState) CompletedCount() int {
 }
 
 // SetFilter sets the current filter.
-func (s *TodoState) SetFilter(f Filter) {
-	s.Filter = f
+func (s *TodoState) SetFilter(f Filter) *TodoState {
+	return &TodoState{
+		Todos:     s.Todos,
+		Filter:    f,
+		EditingID: s.EditingID,
+		NextID:    s.NextID,
+	}
 }

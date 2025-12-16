@@ -101,11 +101,7 @@ func UI(c api.Composer) api.Composer {
 					}
 
 					// Footer
-					TodoFooter(
-						GetTodoState(todoStateValue),
-						func(f Filter) { GetTodoState(todoStateValue).SetFilter(f) },
-						func() { GetTodoState(todoStateValue).ClearCompleted() },
-					)(c)
+					TodoFooter(todoStateValue)(c)
 
 					return c
 				},

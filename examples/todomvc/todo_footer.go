@@ -10,15 +10,13 @@ import (
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/modifiers/weight"
 	"github.com/zodimo/go-compose/pkg/api"
+	"github.com/zodimo/go-compose/state"
 )
 
 // TodoFooter renders the footer with item count, filter buttons, and clear completed.
-func TodoFooter(
-	state *TodoState,
-	onFilterChange func(Filter),
-	onClearCompleted func(),
-) api.Composable {
+func TodoFooter(todoStateValue state.MutableValue) api.Composable {
 	return func(c api.Composer) api.Composer {
+		state := GetTodoState(todoStateValue)
 		if len(state.Todos) == 0 {
 			return c
 		}
@@ -44,17 +42,40 @@ func TodoFooter(
 					row.WithModifier(weight.Weight(1)),
 				)(c)
 
-				// Filter buttons
-				filterButton := func(label string, filter Filter) api.Composable {
-					if state.Filter == filter {
-						return button.Filled(func() { onFilterChange(filter) }, label)
-					}
-					return button.Text(func() { onFilterChange(filter) }, label)
-				}
-
-				filterButton("All", FilterAll)(c)
-				filterButton("Active", FilterActive)(c)
-				filterButton("Completed", FilterCompleted)(c)
+				// Filter buttons - use c.If to get different keys for selected vs unselected
+				c.If(
+					state.Filter == FilterAll,
+					button.Filled(func() {
+						newState := GetTodoState(todoStateValue).SetFilter(FilterAll)
+						todoStateValue.Set(newState)
+					}, "All"),
+					button.Text(func() {
+						newState := GetTodoState(todoStateValue).SetFilter(FilterAll)
+						todoStateValue.Set(newState)
+					}, "All"),
+				)(c)
+				c.If(
+					state.Filter == FilterActive,
+					button.Filled(func() {
+						newState := GetTodoState(todoStateValue).SetFilter(FilterActive)
+						todoStateValue.Set(newState)
+					}, "Active"),
+					button.Text(func() {
+						newState := GetTodoState(todoStateValue).SetFilter(FilterActive)
+						todoStateValue.Set(newState)
+					}, "Active"),
+				)(c)
+				c.If(
+					state.Filter == FilterCompleted,
+					button.Filled(func() {
+						newState := GetTodoState(todoStateValue).SetFilter(FilterCompleted)
+						todoStateValue.Set(newState)
+					}, "Completed"),
+					button.Text(func() {
+						newState := GetTodoState(todoStateValue).SetFilter(FilterCompleted)
+						todoStateValue.Set(newState)
+					}, "Completed"),
+				)(c)
 
 				// Spacer
 				row.Row(
@@ -64,7 +85,10 @@ func TodoFooter(
 
 				// Clear completed button
 				if state.CompletedCount() > 0 {
-					button.Text(onClearCompleted, "Clear completed")(c)
+					button.Text(func() {
+						newState := GetTodoState(todoStateValue).ClearCompleted()
+						todoStateValue.Set(newState)
+					}, "Clear completed")(c)
 				}
 
 				return c
