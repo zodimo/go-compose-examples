@@ -123,7 +123,7 @@ func UI(c api.Composer) api.Composer {
 						),
 						box.WithAlignment(box.Center),
 					),
-					spacer.SpacerHeight(8),
+					spacer.Height(8),
 					// Subtitle
 					box.Box(
 						text.Text(
@@ -135,7 +135,7 @@ func UI(c api.Composer) api.Composer {
 						),
 						box.WithAlignment(box.Center),
 					),
-					spacer.SpacerHeight(32),
+					spacer.Height(32),
 					// Show success message if logged in
 					c.If(
 						isLoginSuccess,
@@ -151,7 +151,7 @@ func UI(c api.Composer) api.Composer {
 													text.StyleWithColor(color.NRGBA{R: 46, G: 125, B: 50, A: 255}),
 												),
 											),
-											spacer.SpacerHeight(8),
+											spacer.Height(8),
 											text.Text(
 												"Welcome back!",
 												text.WithTextStyleOptions(
@@ -167,7 +167,7 @@ func UI(c api.Composer) api.Composer {
 								surface.WithColor(color.NRGBA{R: 232, G: 245, B: 233, A: 255}),
 								surface.WithModifier(size.FillMaxWidth()),
 							),
-							spacer.SpacerHeight(16),
+							spacer.Height(16),
 							// Logout button
 							box.Box(
 								button.Outlined(
@@ -206,7 +206,7 @@ func UI(c api.Composer) api.Composer {
 								textfield.WithSingleLine(true),
 								textfield.WithModifier(size.FillMaxWidth()),
 							),
-							spacer.SpacerHeight(16),
+							spacer.Height(16),
 							// Password field
 							textfield.TextField(
 								password,
@@ -228,7 +228,7 @@ func UI(c api.Composer) api.Composer {
 								textfield.WithOnSubmit(handleLogin),
 								textfield.WithModifier(size.FillMaxWidth()),
 							),
-							spacer.SpacerHeight(24),
+							spacer.Height(24),
 							// Login button
 							box.Box(
 								button.Filled(
@@ -238,7 +238,7 @@ func UI(c api.Composer) api.Composer {
 								),
 								box.WithAlignment(box.Center),
 							),
-							spacer.SpacerHeight(16),
+							spacer.Height(16),
 							// Form status indicator
 							c.When(
 								isSubmitted && !isFormValid,
@@ -252,7 +252,7 @@ func UI(c api.Composer) api.Composer {
 									box.WithAlignment(box.Center),
 								),
 							),
-							spacer.SpacerHeight(24),
+							spacer.Height(24),
 							// Forgot password link (styled as text button)
 							box.Box(
 								row.Row(
@@ -266,7 +266,7 @@ func UI(c api.Composer) api.Composer {
 								),
 								box.WithAlignment(box.Center),
 							),
-							spacer.SpacerHeight(16),
+							spacer.Height(16),
 							// Sign up prompt
 							box.Box(
 								row.Row(
