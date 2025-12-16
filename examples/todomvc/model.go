@@ -204,3 +204,28 @@ func (s *TodoState) SetFilter(f Filter) *TodoState {
 		NextID:    s.NextID,
 	}
 }
+
+// SetEditing starts editing mode for the given todo ID.
+func (s *TodoState) SetEditing(id int) *TodoState {
+	return &TodoState{
+		Todos:     s.Todos,
+		Filter:    s.Filter,
+		EditingID: id,
+		NextID:    s.NextID,
+	}
+}
+
+// CancelEditing exits editing mode without saving.
+func (s *TodoState) CancelEditing() *TodoState {
+	return &TodoState{
+		Todos:     s.Todos,
+		Filter:    s.Filter,
+		EditingID: -1,
+		NextID:    s.NextID,
+	}
+}
+
+// IsEditing returns true if the given todo ID is being edited.
+func (s *TodoState) IsEditing(id int) bool {
+	return s.EditingID == id
+}

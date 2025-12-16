@@ -9,11 +9,12 @@ import (
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/modifiers/weight"
 	"github.com/zodimo/go-compose/pkg/api"
+	"github.com/zodimo/go-compose/store"
 )
 
 // TodoInput renders the header with toggle-all checkbox and new todo input field.
 func TodoInput(
-	todoStateValue api.MutableValue,
+	todoStateValue store.TypedMutableValueInterface[*TodoState],
 	inputText string,
 	onInputChange func(string),
 	onSubmit func(),
@@ -22,11 +23,11 @@ func TodoInput(
 		row.Row(
 			c.Sequence(
 				// Toggle all checkbox (only show if there are todos)
-				c.When(len(GetTodoState(todoStateValue).Todos) > 0,
+				c.When(len(todoStateValue.Get().Todos) > 0,
 					checkbox.Checkbox(
-						GetTodoState(todoStateValue).AllCompleted(),
+						todoStateValue.Get().AllCompleted(),
 						func(checked bool) {
-							newstate := GetTodoState(todoStateValue).ToggleAll(checked)
+							newstate := todoStateValue.Get().ToggleAll(checked)
 							todoStateValue.Set(newstate)
 						},
 						checkbox.WithModifier(padding.All(8)),
@@ -38,6 +39,11 @@ func TodoInput(
 					onInputChange,
 					"What needs to be done?",
 					textfield.WithSingleLine(true),
+					textfield.WithOnSubmit(func() {
+						if inputText != "" {
+							onSubmit()
+						}
+					}),
 					textfield.WithModifier(
 						weight.Weight(1).
 							Then(padding.Horizontal(8, 8)),
