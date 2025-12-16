@@ -13,6 +13,7 @@ import (
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/modifiers/weight"
 	"github.com/zodimo/go-compose/pkg/api"
+	"github.com/zodimo/go-compose/theme"
 
 	"golang.org/x/exp/shiny/materialdesign/icons"
 )
@@ -92,7 +93,7 @@ func TodoItem(
 						text.Text(
 							todo.Text,
 							text.WithTextStyleOptions(
-								text.StyleWithColor(color.NRGBA{R: 150, G: 150, B: 150, A: 255}),
+								text.StyleWithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 150, G: 150, B: 150, A: 255})),
 								text.StyleWithStrikethrough(),
 							),
 						),
@@ -100,7 +101,7 @@ func TodoItem(
 						text.Text(
 							todo.Text,
 							text.WithTextStyleOptions(
-								text.StyleWithColor(color.NRGBA{R: 50, G: 50, B: 50, A: 255}),
+								text.StyleWithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 50, G: 50, B: 50, A: 255})),
 							),
 						),
 					),

@@ -118,7 +118,7 @@ func UI(c api.Composer) api.Composer {
 							"GoCompose Login",
 							text.WithTextStyleOptions(
 								text.StyleWithTextSize(32),
-								text.StyleWithColor(m3.Scheme.Primary.Color.AsNRGBA()),
+								text.StyleWithColor(theme.ColorHelper.SpecificColor(m3.Scheme.Primary.Color.AsNRGBA())),
 							),
 						),
 						box.WithAlignment(box.Center),
@@ -130,7 +130,7 @@ func UI(c api.Composer) api.Composer {
 							"Sign in to continue",
 							text.WithTextStyleOptions(
 								text.StyleWithTextSize(16),
-								text.StyleWithColor(m3.Scheme.SurfaceVariant.OnColor.AsNRGBA()),
+								text.StyleWithColor(theme.ColorHelper.SpecificColor(m3.Scheme.SurfaceVariant.OnColor.AsNRGBA())),
 							),
 						),
 						box.WithAlignment(box.Center),
@@ -148,14 +148,14 @@ func UI(c api.Composer) api.Composer {
 												"✓ Login Successful!",
 												text.WithTextStyleOptions(
 													text.StyleWithTextSize(20),
-													text.StyleWithColor(color.NRGBA{R: 46, G: 125, B: 50, A: 255}),
+													text.StyleWithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 46, G: 125, B: 50, A: 255})),
 												),
 											),
 											spacer.Height(8),
 											text.Text(
 												"Welcome back!",
 												text.WithTextStyleOptions(
-													text.StyleWithColor(m3.Scheme.Surface.OnColor.AsNRGBA()),
+													text.StyleWithColor(theme.ColorHelper.SpecificColor(m3.Scheme.Surface.OnColor.AsNRGBA())),
 												),
 											),
 										),
@@ -164,7 +164,7 @@ func UI(c api.Composer) api.Composer {
 									box.WithModifier(padding.All(24)),
 									box.WithAlignment(box.Center),
 								),
-								surface.WithColor(color.NRGBA{R: 232, G: 245, B: 233, A: 255}),
+								surface.WithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 232, G: 245, B: 233, A: 255})),
 								surface.WithModifier(size.FillMaxWidth()),
 							),
 							spacer.Height(16),
@@ -246,7 +246,7 @@ func UI(c api.Composer) api.Composer {
 									text.Text(
 										"Please fix the errors above",
 										text.WithTextStyleOptions(
-											text.StyleWithColor(color.NRGBA{R: 176, G: 0, B: 32, A: 255}),
+											text.StyleWithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 176, G: 0, B: 32, A: 255})),
 										),
 									),
 									box.WithAlignment(box.Center),
@@ -259,7 +259,7 @@ func UI(c api.Composer) api.Composer {
 									text.Text(
 										"Forgot password?",
 										text.WithTextStyleOptions(
-											text.StyleWithColor(m3.Scheme.Primary.Color.AsNRGBA()),
+											text.StyleWithColor(theme.ColorHelper.SpecificColor(m3.Scheme.Primary.Color.AsNRGBA())),
 										),
 									),
 									row.WithAlignment(row.Middle),
@@ -274,13 +274,13 @@ func UI(c api.Composer) api.Composer {
 										text.Text(
 											"Don't have an account? ",
 											text.WithTextStyleOptions(
-												text.StyleWithColor(m3.Scheme.SurfaceVariant.OnColor.AsNRGBA()),
+												text.StyleWithColor(theme.ColorHelper.SpecificColor(m3.Scheme.SurfaceVariant.OnColor.AsNRGBA())),
 											),
 										),
 										text.Text(
 											"Sign Up",
 											text.WithTextStyleOptions(
-												text.StyleWithColor(m3.Scheme.Primary.Color.AsNRGBA()),
+												text.StyleWithColor(theme.ColorHelper.SpecificColor(m3.Scheme.Primary.Color.AsNRGBA())),
 											),
 										),
 									),
@@ -299,7 +299,7 @@ func UI(c api.Composer) api.Composer {
 			box.WithModifier(size.FillMax()),
 			box.WithAlignment(box.Center),
 		),
-		surface.WithColor(m3.Scheme.Surface.Color.AsNRGBA()),
+		surface.WithColor(theme.ColorHelper.SpecificColor(m3.Scheme.Surface.Color.AsNRGBA())),
 		surface.WithModifier(size.FillMax()),
 	)(c)
 

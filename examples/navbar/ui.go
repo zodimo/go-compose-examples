@@ -15,6 +15,7 @@ import (
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/modifiers/weight"
 	"github.com/zodimo/go-compose/pkg/api"
+	"github.com/zodimo/go-compose/theme"
 
 	mdicons "golang.org/x/exp/shiny/materialdesign/icons"
 )
@@ -44,7 +45,7 @@ func UI() api.Composable {
 							fmt.Sprintf("Selected: %s", items[selectedIdx].Label),
 							m3text.TypestyleDisplayMedium,
 							text.WithTextStyleOptions(
-								text.StyleWithColor(color.NRGBA{A: 255}),
+								text.StyleWithColor(theme.ColorHelper.SpecificColor(color.NRGBA{A: 255})),
 							),
 						)(c)
 					},

@@ -15,6 +15,7 @@ import (
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/pkg/api"
 	"github.com/zodimo/go-compose/store"
+	"github.com/zodimo/go-compose/theme"
 )
 
 // saveState saves the state to file (ignores errors for simplicity)
@@ -50,7 +51,7 @@ func UI(c api.Composer) api.Composer {
 						"todos",
 						text.WithTextStyleOptions(
 							text.StyleWithTextSize(48),
-							text.StyleWithColor(color.NRGBA{R: 175, G: 47, B: 47, A: 100}),
+							text.StyleWithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 175, G: 47, B: 47, A: 100})),
 						),
 					),
 					box.WithModifier(padding.All(16)),
@@ -159,7 +160,7 @@ func UI(c api.Composer) api.Composer {
 			},
 			column.WithModifier(size.FillMax()),
 		),
-		surface.WithColor(color.NRGBA{R: 245, G: 245, B: 245, A: 255}),
+		surface.WithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 245, G: 245, B: 245, A: 255})),
 		surface.WithModifier(size.FillMax()),
 	)(c)
 
