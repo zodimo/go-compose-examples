@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/zodimo/go-compose/compose"
+	"github.com/zodimo/go-compose/pkg/api"
 	"github.com/zodimo/go-compose/runtime"
-	"github.com/zodimo/go-compose/state"
 	"github.com/zodimo/go-compose/store"
 	"github.com/zodimo/go-compose/theme"
 
@@ -36,7 +36,7 @@ func Run(window *app.Window) error {
 
 	var ops op.Ops
 
-	store := store.NewPersistentState(map[string]state.MutableValue{})
+	store := store.NewPersistentState(map[string]api.MutableValue{})
 	store.SetOnStateChange(func() {
 		window.Invalidate()
 	})

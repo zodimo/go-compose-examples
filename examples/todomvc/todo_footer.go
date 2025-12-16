@@ -10,11 +10,10 @@ import (
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/modifiers/weight"
 	"github.com/zodimo/go-compose/pkg/api"
-	"github.com/zodimo/go-compose/state"
 )
 
 // TodoFooter renders the footer with item count, filter buttons, and clear completed.
-func TodoFooter(todoStateValue state.MutableValue) api.Composable {
+func TodoFooter(todoStateValue api.MutableValue) api.Composable {
 	return func(c api.Composer) api.Composer {
 		state := GetTodoState(todoStateValue)
 		if len(state.Todos) == 0 {
