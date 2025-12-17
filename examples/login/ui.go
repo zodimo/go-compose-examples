@@ -55,8 +55,7 @@ func validatePassword(password string) ValidationResult {
 }
 
 func UI(c api.Composer) api.Composer {
-	tm := theme.GetThemeManager()
-	m3 := tm.GetMaterial3Theme()
+	colors := theme.ColorHelper.ColorSelector()
 
 	// State for form fields
 	emailValue := c.State("email", func() any { return "" })
@@ -118,7 +117,7 @@ func UI(c api.Composer) api.Composer {
 							"GoCompose Login",
 							text.WithTextStyleOptions(
 								text.StyleWithTextSize(32),
-								text.StyleWithColor(theme.ColorHelper.SpecificColor(m3.Scheme.Primary.Color.AsNRGBA())),
+								text.StyleWithColor(colors.PrimaryRoles.Primary),
 							),
 						),
 						box.WithAlignment(box.Center),
@@ -130,7 +129,7 @@ func UI(c api.Composer) api.Composer {
 							"Sign in to continue",
 							text.WithTextStyleOptions(
 								text.StyleWithTextSize(16),
-								text.StyleWithColor(theme.ColorHelper.SpecificColor(m3.Scheme.SurfaceVariant.OnColor.AsNRGBA())),
+								text.StyleWithColor(colors.SurfaceRoles.OnVariant),
 							),
 						),
 						box.WithAlignment(box.Center),
@@ -155,7 +154,7 @@ func UI(c api.Composer) api.Composer {
 											text.Text(
 												"Welcome back!",
 												text.WithTextStyleOptions(
-													text.StyleWithColor(theme.ColorHelper.SpecificColor(m3.Scheme.Surface.OnColor.AsNRGBA())),
+													text.StyleWithColor(colors.SurfaceRoles.OnSurface),
 												),
 											),
 										),
@@ -259,7 +258,7 @@ func UI(c api.Composer) api.Composer {
 									text.Text(
 										"Forgot password?",
 										text.WithTextStyleOptions(
-											text.StyleWithColor(theme.ColorHelper.SpecificColor(m3.Scheme.Primary.Color.AsNRGBA())),
+											text.StyleWithColor(colors.PrimaryRoles.Primary),
 										),
 									),
 									row.WithAlignment(row.Middle),
@@ -274,13 +273,13 @@ func UI(c api.Composer) api.Composer {
 										text.Text(
 											"Don't have an account? ",
 											text.WithTextStyleOptions(
-												text.StyleWithColor(theme.ColorHelper.SpecificColor(m3.Scheme.SurfaceVariant.OnColor.AsNRGBA())),
+												text.StyleWithColor(colors.SurfaceRoles.OnVariant),
 											),
 										),
 										text.Text(
 											"Sign Up",
 											text.WithTextStyleOptions(
-												text.StyleWithColor(theme.ColorHelper.SpecificColor(m3.Scheme.Primary.Color.AsNRGBA())),
+												text.StyleWithColor(colors.PrimaryRoles.Primary),
 											),
 										),
 									),
@@ -299,7 +298,7 @@ func UI(c api.Composer) api.Composer {
 			box.WithModifier(size.FillMax()),
 			box.WithAlignment(box.Center),
 		),
-		surface.WithColor(theme.ColorHelper.SpecificColor(m3.Scheme.Surface.Color.AsNRGBA())),
+		surface.WithColor(colors.SurfaceRoles.Surface),
 		surface.WithModifier(size.FillMax()),
 	)(c)
 
