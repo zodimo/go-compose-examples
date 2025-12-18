@@ -170,7 +170,7 @@ func UI(c api.Composer) api.Composer {
 				),
 			),
 		),
-		card.WithModifier(size.Width(320)),
+		card.WithModifier(size.FillMax()),
 	)(c)
 
 	return c
