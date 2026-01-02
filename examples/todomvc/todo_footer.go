@@ -6,13 +6,13 @@ import (
 	"github.com/zodimo/go-compose/compose/foundation/layout/row"
 	"github.com/zodimo/go-compose/compose/foundation/text"
 	"github.com/zodimo/go-compose/compose/material3/button"
+	uiText "github.com/zodimo/go-compose/compose/ui/text"
+	"github.com/zodimo/go-compose/compose/ui/unit"
 	"github.com/zodimo/go-compose/modifiers/padding"
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/modifiers/weight"
 	"github.com/zodimo/go-compose/pkg/api"
 	"github.com/zodimo/go-compose/store"
-
-	uiText "github.com/zodimo/go-compose/compose/ui/text"
 )
 
 // TodoFooter renders the footer with item count, filter buttons, and clear completed.
@@ -34,7 +34,7 @@ func TodoFooter(todoStateValue store.TypedMutableValueInterface[*TodoState]) api
 				text.Text(
 					fmt.Sprintf("%d %s left", activeCount, itemText),
 					text.WithTextStyleOptions(
-						uiText.WithFontSize(12),
+						uiText.WithFontSize(unit.Sp(12)),
 					),
 				)(c)
 
