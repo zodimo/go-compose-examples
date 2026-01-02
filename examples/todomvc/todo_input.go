@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/zodimo/go-compose/compose/foundation/layout/row"
-	"github.com/zodimo/go-compose/compose/foundation/material3/button"
-	"github.com/zodimo/go-compose/compose/foundation/material3/checkbox"
-	"github.com/zodimo/go-compose/compose/foundation/material3/textfield"
+	"github.com/zodimo/go-compose/compose/material3/button"
+	"github.com/zodimo/go-compose/compose/material3/checkbox"
+	"github.com/zodimo/go-compose/compose/material3/textfield"
 	"github.com/zodimo/go-compose/modifiers/padding"
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/modifiers/weight"

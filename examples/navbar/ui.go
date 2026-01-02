@@ -9,13 +9,14 @@ import (
 	"github.com/zodimo/go-compose/compose/foundation/icon"
 	"github.com/zodimo/go-compose/compose/foundation/layout/box"
 	"github.com/zodimo/go-compose/compose/foundation/layout/column"
-	"github.com/zodimo/go-compose/compose/foundation/material3/navigationbar"
-	m3text "github.com/zodimo/go-compose/compose/foundation/material3/text"
 	"github.com/zodimo/go-compose/compose/foundation/text"
+	"github.com/zodimo/go-compose/compose/material3/navigationbar"
+	m3text "github.com/zodimo/go-compose/compose/material3/text"
+	"github.com/zodimo/go-compose/compose/ui/graphics"
+	uiText "github.com/zodimo/go-compose/compose/ui/text"
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/modifiers/weight"
 	"github.com/zodimo/go-compose/pkg/api"
-	"github.com/zodimo/go-compose/theme"
 
 	mdicons "golang.org/x/exp/shiny/materialdesign/icons"
 )
@@ -41,11 +42,10 @@ func UI() api.Composable {
 				// Content Area
 				box.Box(
 					func(c api.Composer) api.Composer {
-						return m3text.Text(
+						return m3text.DisplayMedium(
 							fmt.Sprintf("Selected: %s", items[selectedIdx].Label),
-							m3text.TypestyleDisplayMedium,
 							text.WithTextStyleOptions(
-								text.StyleWithColor(theme.ColorHelper.SpecificColor(color.NRGBA{A: 255})),
+								uiText.WithColor(graphics.FromNRGBA(color.NRGBA{A: 255})),
 							),
 						)(c)
 					},
@@ -67,7 +67,7 @@ func UI() api.Composable {
 									return icon.Icon(item.Icon)(c)
 								},
 								func(c api.Composer) api.Composer {
-									return m3text.Text(item.Label, m3text.TypestyleLabelMedium)(c)
+									return m3text.LabelMedium(item.Label)(c)
 								},
 							)(c)
 						}

@@ -8,9 +8,11 @@ import (
 	"github.com/zodimo/go-compose/compose/foundation/layout/box"
 	"github.com/zodimo/go-compose/compose/foundation/layout/column"
 	"github.com/zodimo/go-compose/compose/foundation/lazy"
-	"github.com/zodimo/go-compose/compose/foundation/material3/divider"
-	"github.com/zodimo/go-compose/compose/foundation/material3/surface"
 	"github.com/zodimo/go-compose/compose/foundation/text"
+	"github.com/zodimo/go-compose/compose/material3/divider"
+	"github.com/zodimo/go-compose/compose/material3/surface"
+	"github.com/zodimo/go-compose/compose/ui/graphics"
+	uiText "github.com/zodimo/go-compose/compose/ui/text"
 	"github.com/zodimo/go-compose/modifiers/padding"
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/pkg/api"
@@ -50,8 +52,8 @@ func UI(c api.Composer) api.Composer {
 					text.Text(
 						"todos",
 						text.WithTextStyleOptions(
-							text.StyleWithTextSize(48),
-							text.StyleWithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 175, G: 47, B: 47, A: 100})),
+							uiText.WithFontSize(48),
+							uiText.WithColor(graphics.FromNRGBA(color.NRGBA{R: 175, G: 47, B: 47, A: 100})),
 						),
 					),
 					box.WithModifier(padding.All(16)),
@@ -160,7 +162,7 @@ func UI(c api.Composer) api.Composer {
 			},
 			column.WithModifier(size.FillMax()),
 		),
-		surface.WithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 245, G: 245, B: 245, A: 255})),
+		surface.WithColor(theme.ColorHelper.SpecificColor(graphics.FromNRGBA(color.NRGBA{R: 245, G: 245, B: 245, A: 255}))),
 		surface.WithModifier(size.FillMax()),
 	)(c)
 

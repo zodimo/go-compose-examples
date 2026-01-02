@@ -3,6 +3,7 @@ package booklist
 import (
 	"image/color"
 
+	"github.com/zodimo/go-compose/compose/ui/graphics"
 	"github.com/zodimo/go-compose/modifiers/background"
 	"github.com/zodimo/go-compose/pkg/api"
 	"github.com/zodimo/go-compose/theme"
@@ -31,7 +32,10 @@ func bookListScreen(state BoolListState, onAction func(action BookListAction)) a
 			func() {
 
 			},
-			background.Background(theme.ColorHelper.SpecificColor(color.NRGBA{R: 255, G: 255, B: 255, A: 255})),
+			background.Background(
+				theme.ColorHelper.SpecificColor(
+					graphics.FromNRGBA(color.NRGBA{R: 255, G: 255, B: 255, A: 255})),
+			),
 		)(c)
 	}
 }

@@ -7,10 +7,10 @@ import (
 	"github.com/zodimo/go-compose/compose/foundation/icon"
 	"github.com/zodimo/go-compose/compose/foundation/layout/column"
 	"github.com/zodimo/go-compose/compose/foundation/layout/row"
-	"github.com/zodimo/go-compose/compose/foundation/material3/iconbutton"
+	"github.com/zodimo/go-compose/compose/material3/iconbutton"
+	"github.com/zodimo/go-compose/compose/ui/graphics"
 	"github.com/zodimo/go-compose/modifiers/padding"
 	"github.com/zodimo/go-compose/modifiers/scale"
-	"github.com/zodimo/go-compose/theme"
 
 	"github.com/zodimo/go-compose/pkg/api"
 )
@@ -67,7 +67,7 @@ func UI(c api.Composer) api.LayoutNode {
 			scaleFactor := 0.8 + 0.7*float32((i+j)%10)/10.0
 
 			rowItems = append(rowItems, icon.Icon(def.Data,
-				icon.WithColor(theme.ColorHelper.SpecificColor(col)),
+				icon.WithColor(graphics.FromNRGBA(col)),
 				icon.WithModifier(scale.Scale(scaleFactor)),
 				icon.WithModifier(padding.All(3)),
 			))

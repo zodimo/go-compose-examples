@@ -5,15 +5,17 @@ import (
 
 	"github.com/zodimo/go-compose/compose/foundation/layout/box"
 	"github.com/zodimo/go-compose/compose/foundation/layout/row"
-	"github.com/zodimo/go-compose/compose/foundation/material3/checkbox"
-	"github.com/zodimo/go-compose/compose/foundation/material3/iconbutton"
-	"github.com/zodimo/go-compose/compose/foundation/material3/textfield"
 	"github.com/zodimo/go-compose/compose/foundation/text"
+	"github.com/zodimo/go-compose/compose/material3/checkbox"
+	"github.com/zodimo/go-compose/compose/material3/iconbutton"
+	"github.com/zodimo/go-compose/compose/material3/textfield"
+
+	"github.com/zodimo/go-compose/compose/ui/graphics"
+	uiText "github.com/zodimo/go-compose/compose/ui/text"
 	"github.com/zodimo/go-compose/modifiers/padding"
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/modifiers/weight"
 	"github.com/zodimo/go-compose/pkg/api"
-	"github.com/zodimo/go-compose/theme"
 
 	"golang.org/x/exp/shiny/materialdesign/icons"
 )
@@ -93,15 +95,15 @@ func TodoItem(
 						text.Text(
 							todo.Text,
 							text.WithTextStyleOptions(
-								text.StyleWithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 150, G: 150, B: 150, A: 255})),
-								text.StyleWithStrikethrough(),
+								uiText.WithColor(graphics.FromNRGBA(color.NRGBA{R: 150, G: 150, B: 150, A: 255})),
 							),
+							text.StyleWithStrikethrough(),
 						),
 						// Active: normal color
 						text.Text(
 							todo.Text,
 							text.WithTextStyleOptions(
-								text.StyleWithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 50, G: 50, B: 50, A: 255})),
+								uiText.WithColor(graphics.FromNRGBA(color.NRGBA{R: 50, G: 50, B: 50, A: 255})),
 							),
 						),
 					),

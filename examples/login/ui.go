@@ -9,10 +9,14 @@ import (
 	"github.com/zodimo/go-compose/compose/foundation/layout/column"
 	"github.com/zodimo/go-compose/compose/foundation/layout/row"
 	"github.com/zodimo/go-compose/compose/foundation/layout/spacer"
-	"github.com/zodimo/go-compose/compose/foundation/material3/button"
-	"github.com/zodimo/go-compose/compose/foundation/material3/surface"
-	"github.com/zodimo/go-compose/compose/foundation/material3/textfield"
 	"github.com/zodimo/go-compose/compose/foundation/text"
+	"github.com/zodimo/go-compose/compose/material3"
+	"github.com/zodimo/go-compose/compose/material3/button"
+	"github.com/zodimo/go-compose/compose/material3/surface"
+	"github.com/zodimo/go-compose/compose/material3/textfield"
+	"github.com/zodimo/go-compose/compose/ui/graphics"
+	uiText "github.com/zodimo/go-compose/compose/ui/text"
+	"github.com/zodimo/go-compose/compose/ui/unit"
 	"github.com/zodimo/go-compose/modifiers/padding"
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/pkg/api"
@@ -116,8 +120,8 @@ func UI(c api.Composer) api.Composer {
 						text.Text(
 							"GoCompose Login",
 							text.WithTextStyleOptions(
-								text.StyleWithTextSize(32),
-								text.StyleWithColor(colors.PrimaryRoles.Primary),
+								uiText.WithFontSize(unit.Sp(32)),
+								uiText.WithColor(material3.Theme(c).ColorScheme().Primary.Color),
 							),
 						),
 						box.WithAlignment(box.Center),
@@ -128,8 +132,8 @@ func UI(c api.Composer) api.Composer {
 						text.Text(
 							"Sign in to continue",
 							text.WithTextStyleOptions(
-								text.StyleWithTextSize(16),
-								text.StyleWithColor(colors.SurfaceRoles.OnVariant),
+								uiText.WithFontSize(unit.Sp(16)),
+								uiText.WithColor(material3.Theme(c).ColorScheme().SurfaceVariant.OnColor),
 							),
 						),
 						box.WithAlignment(box.Center),
@@ -146,15 +150,15 @@ func UI(c api.Composer) api.Composer {
 											text.Text(
 												"✓ Login Successful!",
 												text.WithTextStyleOptions(
-													text.StyleWithTextSize(20),
-													text.StyleWithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 46, G: 125, B: 50, A: 255})),
+													uiText.WithFontSize(unit.Sp(20)),
+													uiText.WithColor(graphics.FromNRGBA(color.NRGBA{R: 46, G: 125, B: 50, A: 255})),
 												),
 											),
 											spacer.Height(8),
 											text.Text(
 												"Welcome back!",
 												text.WithTextStyleOptions(
-													text.StyleWithColor(colors.SurfaceRoles.OnSurface),
+													uiText.WithColor(material3.Theme(c).ColorScheme().Surface.OnColor),
 												),
 											),
 										),
@@ -163,7 +167,7 @@ func UI(c api.Composer) api.Composer {
 									box.WithModifier(padding.All(24)),
 									box.WithAlignment(box.Center),
 								),
-								surface.WithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 232, G: 245, B: 233, A: 255})),
+								surface.WithColor(theme.ColorHelper.SpecificColor(graphics.FromNRGBA(color.NRGBA{R: 232, G: 245, B: 233, A: 255}))),
 								surface.WithModifier(size.FillMaxWidth()),
 							),
 							spacer.Height(16),
@@ -245,7 +249,7 @@ func UI(c api.Composer) api.Composer {
 									text.Text(
 										"Please fix the errors above",
 										text.WithTextStyleOptions(
-											text.StyleWithColor(theme.ColorHelper.SpecificColor(color.NRGBA{R: 176, G: 0, B: 32, A: 255})),
+											uiText.WithColor(graphics.FromNRGBA(color.NRGBA{R: 176, G: 0, B: 32, A: 255})),
 										),
 									),
 									box.WithAlignment(box.Center),
@@ -258,7 +262,7 @@ func UI(c api.Composer) api.Composer {
 									text.Text(
 										"Forgot password?",
 										text.WithTextStyleOptions(
-											text.StyleWithColor(colors.PrimaryRoles.Primary),
+											uiText.WithColor(material3.Theme(c).ColorScheme().Primary.Color),
 										),
 									),
 									row.WithAlignment(row.Middle),
@@ -273,13 +277,13 @@ func UI(c api.Composer) api.Composer {
 										text.Text(
 											"Don't have an account? ",
 											text.WithTextStyleOptions(
-												text.StyleWithColor(colors.SurfaceRoles.OnVariant),
+												uiText.WithColor(material3.Theme(c).ColorScheme().SurfaceVariant.OnColor), //colors.SurfaceRoles.OnVariant),
 											),
 										),
 										text.Text(
 											"Sign Up",
 											text.WithTextStyleOptions(
-												text.StyleWithColor(colors.PrimaryRoles.Primary),
+												uiText.WithColor(material3.Theme(c).ColorScheme().Primary.Color),
 											),
 										),
 									),

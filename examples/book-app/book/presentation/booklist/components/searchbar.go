@@ -1,7 +1,7 @@
 package components
 
 import (
-	"github.com/zodimo/go-compose/compose/foundation/material3/textfield"
+	"github.com/zodimo/go-compose/compose/material3/textfield"
 	"github.com/zodimo/go-compose/compose/ui"
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/pkg/api"
@@ -18,7 +18,6 @@ func SearchBar(
 		return textfield.Outlined(
 			searchQuery,
 			onSearchQueryChange,
-			"",
 			textfield.WithModifier(
 				modifier.Then(
 					size.FillMaxWidth(),

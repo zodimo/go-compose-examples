@@ -9,14 +9,16 @@ import (
 	"github.com/zodimo/go-compose/compose/foundation/layout/column"
 	"github.com/zodimo/go-compose/compose/foundation/layout/row"
 	"github.com/zodimo/go-compose/compose/foundation/layout/spacer"
-	"github.com/zodimo/go-compose/compose/foundation/material3/button"
-	"github.com/zodimo/go-compose/compose/foundation/material3/card"
-	"github.com/zodimo/go-compose/compose/foundation/material3/iconbutton"
-	"github.com/zodimo/go-compose/compose/foundation/material3/surface"
 	ftext "github.com/zodimo/go-compose/compose/foundation/text"
+	"github.com/zodimo/go-compose/compose/material3"
+	"github.com/zodimo/go-compose/compose/material3/button"
+	"github.com/zodimo/go-compose/compose/material3/card"
+	"github.com/zodimo/go-compose/compose/material3/iconbutton"
+	"github.com/zodimo/go-compose/compose/material3/surface"
 	"github.com/zodimo/go-compose/compose/ui/graphics"
 	"github.com/zodimo/go-compose/compose/ui/graphics/shape"
 	uilayout "github.com/zodimo/go-compose/compose/ui/layout"
+	"github.com/zodimo/go-compose/compose/ui/unit"
 	"github.com/zodimo/go-compose/modifiers/border"
 	"github.com/zodimo/go-compose/modifiers/clip"
 	"github.com/zodimo/go-compose/modifiers/offset"
@@ -24,6 +26,7 @@ import (
 	"github.com/zodimo/go-compose/pkg/api"
 	"github.com/zodimo/go-compose/theme"
 
+	uiText "github.com/zodimo/go-compose/compose/ui/text"
 	mdicons "golang.org/x/exp/shiny/materialdesign/icons"
 )
 
@@ -78,8 +81,8 @@ func UI(c api.Composer) api.Composer {
 							ftext.Text(
 								"CodingLab",
 								ftext.WithTextStyleOptions(
-									ftext.StyleWithTextSize(24),
-									ftext.StyleWithColor(colors.SurfaceRoles.OnSurface),
+									uiText.WithFontSize(unit.Sp(24)),
+									uiText.WithColor(material3.Theme(c).ColorScheme().Surface.OnColor),
 								),
 							),
 							box.WithAlignment(box.Center),
@@ -91,8 +94,8 @@ func UI(c api.Composer) api.Composer {
 							ftext.Text(
 								"YouTuber & Blogger",
 								ftext.WithTextStyleOptions(
-									ftext.StyleWithTextSize(14),
-									ftext.StyleWithColor(colors.SurfaceRoles.OnVariant),
+									uiText.WithFontSize(unit.Sp(14)),
+									uiText.WithColor(material3.Theme(c).ColorScheme().SurfaceVariant.OnColor),
 								),
 							),
 							box.WithAlignment(box.Center),
@@ -146,18 +149,18 @@ func UI(c api.Composer) api.Composer {
 							row.Row(
 								c.Sequence(
 									ftext.Text("♡ 60.4k", ftext.WithTextStyleOptions(
-										ftext.StyleWithTextSize(14),
-										ftext.StyleWithColor(colors.SurfaceRoles.OnVariant),
+										uiText.WithFontSize(unit.Sp(14)),
+										uiText.WithColor(material3.Theme(c).ColorScheme().SurfaceVariant.OnColor),
 									)),
 									spacer.Width(24),
 									ftext.Text("◎ 20k", ftext.WithTextStyleOptions(
-										ftext.StyleWithTextSize(14),
-										ftext.StyleWithColor(colors.SurfaceRoles.OnVariant),
+										uiText.WithFontSize(unit.Sp(14)),
+										uiText.WithColor(material3.Theme(c).ColorScheme().SurfaceVariant.OnColor),
 									)),
 									spacer.Width(24),
 									ftext.Text("⇄ 12.4k", ftext.WithTextStyleOptions(
-										ftext.StyleWithTextSize(14),
-										ftext.StyleWithColor(colors.SurfaceRoles.OnVariant),
+										uiText.WithFontSize(unit.Sp(14)),
+										uiText.WithColor(material3.Theme(c).ColorScheme().SurfaceVariant.OnColor),
 									)),
 								),
 								row.WithAlignment(row.Middle),
