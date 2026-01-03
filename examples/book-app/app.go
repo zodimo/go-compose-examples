@@ -8,7 +8,6 @@ import (
 	"github.com/zodimo/go-compose/compose/ui/graphics"
 	"github.com/zodimo/go-compose/modifiers/background"
 	"github.com/zodimo/go-compose/modifiers/size"
-	"github.com/zodimo/go-compose/theme"
 	"gitub.com/zodimo/go-compose-examples/examples/book-app/book/domain"
 	"gitub.com/zodimo/go-compose-examples/examples/book-app/book/presentation/booklist"
 )
@@ -24,8 +23,7 @@ func App(c compose.Composer) compose.Composer {
 
 		column.WithModifier(
 			background.Background(
-				theme.ColorHelper.SpecificColor(
-					graphics.FromNRGBA(color.NRGBA{R: 0, G: 0, B: 200, A: 200}))).
+				graphics.FromNRGBA(color.NRGBA{R: 0, G: 0, B: 200, A: 200})).
 				Then(size.FillMaxHeight()),
 		),
 	)(c)

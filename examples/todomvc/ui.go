@@ -18,7 +18,6 @@ import (
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/pkg/api"
 	"github.com/zodimo/go-compose/store"
-	"github.com/zodimo/go-compose/theme"
 )
 
 // saveState saves the state to file (ignores errors for simplicity)
@@ -163,7 +162,7 @@ func UI(c api.Composer) api.Composer {
 			},
 			column.WithModifier(size.FillMax()),
 		),
-		surface.WithColor(theme.ColorHelper.SpecificColor(graphics.FromNRGBA(color.NRGBA{R: 245, G: 245, B: 245, A: 255}))),
+		surface.WithColor(graphics.FromNRGBA(color.NRGBA{R: 245, G: 245, B: 245, A: 255})),
 		surface.WithModifier(size.FillMax()),
 	)(c)
 

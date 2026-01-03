@@ -24,7 +24,6 @@ import (
 	"github.com/zodimo/go-compose/modifiers/offset"
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/pkg/api"
-	"github.com/zodimo/go-compose/theme"
 
 	uiText "github.com/zodimo/go-compose/compose/ui/text"
 	mdicons "golang.org/x/exp/shiny/materialdesign/icons"
@@ -34,7 +33,7 @@ import (
 var assets embed.FS
 
 func UI(c api.Composer) api.Composer {
-	colors := theme.ColorHelper.ColorSelector()
+	theme := material3.Theme(c)
 
 	// Load profile image
 	imageResource := graphics.NewResourceFromImageFS(assets, "gopher.png")
@@ -52,7 +51,7 @@ func UI(c api.Composer) api.Composer {
 			card.ContentCover(
 				surface.Surface(
 					spacer.Height(100),
-					surface.WithColor(colors.PrimaryRoles.Primary),
+					surface.WithColor(theme.ColorScheme().Primary.Color),
 				),
 			),
 
@@ -68,8 +67,8 @@ func UI(c api.Composer) api.Composer {
 								fImage.WithAlignment(size.Center),
 								fImage.WithModifier(
 									size.Size(100, 100).
-										Then(clip.Clip(shape.ShapeCircle)).
-										Then(border.Border(4, colors.PrimaryRoles.Primary, shape.ShapeCircle)),
+										Then(clip.Clip(shape.CircleShape)).
+										Then(border.Border(4, theme.ColorScheme().Primary.Color, shape.CircleShape)),
 								),
 							),
 							box.WithAlignment(box.Center),

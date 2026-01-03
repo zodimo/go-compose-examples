@@ -20,7 +20,6 @@ import (
 	"github.com/zodimo/go-compose/modifiers/padding"
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/pkg/api"
-	"github.com/zodimo/go-compose/theme"
 )
 
 // ValidationResult represents the result of a field validation
@@ -59,8 +58,7 @@ func validatePassword(password string) ValidationResult {
 }
 
 func UI(c api.Composer) api.Composer {
-	colors := theme.ColorHelper.ColorSelector()
-
+	theme := material3.Theme(c)
 	// State for form fields
 	emailValue := c.State("email", func() any { return "" })
 	passwordValue := c.State("password", func() any { return "" })
@@ -167,7 +165,7 @@ func UI(c api.Composer) api.Composer {
 									box.WithModifier(padding.All(24)),
 									box.WithAlignment(box.Center),
 								),
-								surface.WithColor(theme.ColorHelper.SpecificColor(graphics.FromNRGBA(color.NRGBA{R: 232, G: 245, B: 233, A: 255}))),
+								surface.WithColor(graphics.FromNRGBA(color.NRGBA{R: 232, G: 245, B: 233, A: 255})),
 								surface.WithModifier(size.FillMaxWidth()),
 							),
 							spacer.Height(16),
@@ -302,7 +300,7 @@ func UI(c api.Composer) api.Composer {
 			box.WithModifier(size.FillMax()),
 			box.WithAlignment(box.Center),
 		),
-		surface.WithColor(colors.SurfaceRoles.Surface),
+		surface.WithColor(theme.ColorScheme().Surface.Color),
 		surface.WithModifier(size.FillMax()),
 	)(c)
 
