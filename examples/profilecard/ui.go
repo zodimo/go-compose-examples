@@ -51,7 +51,7 @@ func UI(c api.Composer) api.Composer {
 			card.ContentCover(
 				surface.Surface(
 					spacer.Height(100),
-					surface.WithColor(theme.ColorScheme().Primary.Color),
+					surface.WithColor(theme.ColorScheme().Primary),
 				),
 			),
 
@@ -68,7 +68,7 @@ func UI(c api.Composer) api.Composer {
 								fImage.WithModifier(
 									size.Size(100, 100).
 										Then(clip.Clip(shape.CircleShape)).
-										Then(border.Border(4, theme.ColorScheme().Primary.Color, shape.CircleShape)),
+										Then(border.Border(4, theme.ColorScheme().Primary, shape.CircleShape)),
 								),
 							),
 							box.WithAlignment(box.Center),
@@ -81,7 +81,7 @@ func UI(c api.Composer) api.Composer {
 								"CodingLab",
 								ftext.WithTextStyleOptions(
 									uiText.WithFontSize(unit.Sp(24)),
-									uiText.WithColor(material3.Theme(c).ColorScheme().Surface.OnColor),
+									uiText.WithColor(material3.Theme(c).ColorScheme().OnSurface),
 								),
 							),
 							box.WithAlignment(box.Center),
@@ -94,7 +94,7 @@ func UI(c api.Composer) api.Composer {
 								"YouTuber & Blogger",
 								ftext.WithTextStyleOptions(
 									uiText.WithFontSize(unit.Sp(14)),
-									uiText.WithColor(material3.Theme(c).ColorScheme().SurfaceVariant.OnColor),
+									uiText.WithColor(material3.Theme(c).ColorScheme().OnSurfaceVariant),
 								),
 							),
 							box.WithAlignment(box.Center),
@@ -149,17 +149,17 @@ func UI(c api.Composer) api.Composer {
 								c.Sequence(
 									ftext.Text("♡ 60.4k", ftext.WithTextStyleOptions(
 										uiText.WithFontSize(unit.Sp(14)),
-										uiText.WithColor(material3.Theme(c).ColorScheme().SurfaceVariant.OnColor),
+										uiText.WithColor(material3.Theme(c).ColorScheme().OnSurfaceVariant),
 									)),
 									spacer.Width(24),
 									ftext.Text("◎ 20k", ftext.WithTextStyleOptions(
 										uiText.WithFontSize(unit.Sp(14)),
-										uiText.WithColor(material3.Theme(c).ColorScheme().SurfaceVariant.OnColor),
+										uiText.WithColor(material3.Theme(c).ColorScheme().OnSurfaceVariant),
 									)),
 									spacer.Width(24),
 									ftext.Text("⇄ 12.4k", ftext.WithTextStyleOptions(
 										uiText.WithFontSize(unit.Sp(14)),
-										uiText.WithColor(material3.Theme(c).ColorScheme().SurfaceVariant.OnColor),
+										uiText.WithColor(material3.Theme(c).ColorScheme().OnSurfaceVariant),
 									)),
 								),
 								row.WithAlignment(row.Middle),

@@ -119,7 +119,7 @@ func UI(c api.Composer) api.Composer {
 							"GoCompose Login",
 							text.WithTextStyleOptions(
 								uiText.WithFontSize(unit.Sp(32)),
-								uiText.WithColor(material3.Theme(c).ColorScheme().Primary.Color),
+								uiText.WithColor(material3.Theme(c).ColorScheme().Primary),
 							),
 						),
 						box.WithAlignment(box.Center),
@@ -131,7 +131,7 @@ func UI(c api.Composer) api.Composer {
 							"Sign in to continue",
 							text.WithTextStyleOptions(
 								uiText.WithFontSize(unit.Sp(16)),
-								uiText.WithColor(material3.Theme(c).ColorScheme().SurfaceVariant.OnColor),
+								uiText.WithColor(material3.Theme(c).ColorScheme().OnSurfaceVariant),
 							),
 						),
 						box.WithAlignment(box.Center),
@@ -156,7 +156,7 @@ func UI(c api.Composer) api.Composer {
 											text.Text(
 												"Welcome back!",
 												text.WithTextStyleOptions(
-													uiText.WithColor(material3.Theme(c).ColorScheme().Surface.OnColor),
+													uiText.WithColor(material3.Theme(c).ColorScheme().OnSurface),
 												),
 											),
 										),
@@ -260,7 +260,7 @@ func UI(c api.Composer) api.Composer {
 									text.Text(
 										"Forgot password?",
 										text.WithTextStyleOptions(
-											uiText.WithColor(material3.Theme(c).ColorScheme().Primary.Color),
+											uiText.WithColor(material3.Theme(c).ColorScheme().Primary),
 										),
 									),
 									row.WithAlignment(row.Middle),
@@ -275,13 +275,13 @@ func UI(c api.Composer) api.Composer {
 										text.Text(
 											"Don't have an account? ",
 											text.WithTextStyleOptions(
-												uiText.WithColor(material3.Theme(c).ColorScheme().SurfaceVariant.OnColor), //colors.SurfaceRoles.OnVariant),
+												uiText.WithColor(material3.Theme(c).ColorScheme().OnSurfaceVariant), //colors.SurfaceRoles.OnVariant),
 											),
 										),
 										text.Text(
 											"Sign Up",
 											text.WithTextStyleOptions(
-												uiText.WithColor(material3.Theme(c).ColorScheme().Primary.Color),
+												uiText.WithColor(material3.Theme(c).ColorScheme().Primary),
 											),
 										),
 									),
@@ -300,7 +300,7 @@ func UI(c api.Composer) api.Composer {
 			box.WithModifier(size.FillMax()),
 			box.WithAlignment(box.Center),
 		),
-		surface.WithColor(theme.ColorScheme().Surface.Color),
+		surface.WithColor(theme.ColorScheme().Surface),
 		surface.WithModifier(size.FillMax()),
 	)(c)
 
