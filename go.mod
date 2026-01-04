@@ -6,7 +6,7 @@ toolchain go1.24.11
 
 require (
 	gioui.org v0.9.0
-	github.com/zodimo/go-compose v0.1.30
+	github.com/zodimo/go-compose v0.1.37
 	github.com/zodimo/go-maybe v0.1.3
 	golang.org/x/exp/shiny v0.0.0-20251219203646-944ab1f22d93
 )
@@ -23,4 +23,4 @@ require (
 	golang.org/x/text v0.32.0 // indirect
 )
 
-replace github.com/zodimo/go-compose => ../go-compose
+// replace github.com/zodimo/go-compose => ../go-compose
