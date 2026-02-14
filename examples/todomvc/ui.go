@@ -16,8 +16,9 @@ import (
 	"github.com/zodimo/go-compose/compose/ui/unit"
 	"github.com/zodimo/go-compose/modifiers/padding"
 	"github.com/zodimo/go-compose/modifiers/size"
+	"github.com/zodimo/go-compose/modifiers/weight"
 	"github.com/zodimo/go-compose/pkg/api"
-	"github.com/zodimo/go-compose/store"
+	"github.com/zodimo/go-compose/state"
 )
 
 // saveState saves the state to file (ignores errors for simplicity)
@@ -27,7 +28,7 @@ func saveState(state *TodoState) {
 
 func UI(c api.Composer) api.Composer {
 	// State management - load from file on first run
-	todoStateValue := store.StateUnsafe[*TodoState](c, "todoState", func() *TodoState {
+	todoStateValue := state.MustState[*TodoState](c, "todoState", func() *TodoState {
 		return LoadFromFile()
 	})
 
@@ -43,10 +44,14 @@ func UI(c api.Composer) api.Composer {
 	})
 	editText := editTextValue.Get().(string)
 
+	// Todo list
+	filteredTodos := todoStateValue.Get().FilteredTodos()
+	currentState := todoStateValue.Get()
+
 	// Background surface
 	surface.Surface(
 		column.Column(
-			func(c api.Composer) api.Composer {
+			c.Sequence(
 				// Header title
 				box.Box(
 					text.Text(
@@ -58,7 +63,7 @@ func UI(c api.Composer) api.Composer {
 					),
 					box.WithModifier(padding.All(16)),
 					box.WithAlignment(box.Center),
-				)(c)
+				),
 
 				// Input section
 				TodoInput(
@@ -79,87 +84,91 @@ func UI(c api.Composer) api.Composer {
 						inputTextValue.Set("")
 						saveState(newState)
 					},
-				)(c)
+				),
 
-				divider.Divider()(c)
+				divider.Divider(),
+				box.Box(
+					c.When(
+						len(filteredTodos) > 0,
+						lazy.LazyColumn(
+							func(scope lazy.LazyListScope) {
+								scope.Items(
+									len(filteredTodos),
+									func(index int) any {
+										t := filteredTodos[index]
+										isEditing := currentState.IsEditing(t.ID)
+										return fmt.Sprintf("%d-%v", t.ID, isEditing)
+									},
+									func(index int) api.Composable {
+										t := filteredTodos[index]
+										isEditing := currentState.IsEditing(t.ID)
 
-				// Todo list
-				filteredTodos := todoStateValue.Get().FilteredTodos()
-				currentState := todoStateValue.Get()
-
-				if len(filteredTodos) > 0 {
-					lazy.LazyColumn(
-						func(scope lazy.LazyListScope) {
-							for _, todo := range filteredTodos {
-								// Capture todo in closure
-								t := todo
-								isEditing := currentState.IsEditing(t.ID)
-
-								scope.Item(fmt.Sprintf("%d-%v", t.ID, isEditing), func(c api.Composer) api.Composer {
-									TodoItem(
-										t,
-										isEditing,
-										editText,
-										// onEditTextChange
-										func(newText string) {
-											editTextValue.Set(newText)
-										},
-										// onToggle
-										func() {
-											newState := todoStateValue.Get().ToggleTodo(t.ID)
-											todoStateValue.Set(newState)
-											saveState(newState)
-										},
-										// onEdit
-										func() {
-											newState := todoStateValue.Get().SetEditing(t.ID)
-											todoStateValue.Set(newState)
-											editTextValue.Set(t.Text)
-										},
-										// onSaveEdit
-										func() {
-											currentEditText := editTextValue.Get().(string)
-											currentEditText = strings.TrimSpace(currentEditText)
-											var newState *TodoState
-											if currentEditText == "" {
-												// Delete if empty
-												newState = todoStateValue.Get().DeleteTodo(t.ID)
-											} else {
-												// Update text
-												newState = todoStateValue.Get().UpdateTodo(t.ID, currentEditText)
-											}
-											newState = newState.CancelEditing()
-											todoStateValue.Set(newState)
-											editTextValue.Set("")
-											saveState(newState)
-										},
-										// onCancelEdit
-										func() {
-											newState := todoStateValue.Get().CancelEditing()
-											todoStateValue.Set(newState)
-											editTextValue.Set("")
-										},
-										// onDelete
-										func() {
-											newState := todoStateValue.Get().DeleteTodo(t.ID)
-											todoStateValue.Set(newState)
-											saveState(newState)
-										},
-									)(c)
-									divider.Divider()(c)
-									return c
-								})
-							}
-						},
-						lazy.WithModifier(size.FillMaxWidth()),
-					)(c)
-				}
-
+										return column.Column(
+											c.Sequence(
+												TodoItem(
+													t,
+													isEditing,
+													editText,
+													// onEditTextChange
+													func(newText string) {
+														editTextValue.Set(newText)
+													},
+													// onToggle
+													func() {
+														newState := todoStateValue.Get().ToggleTodo(t.ID)
+														todoStateValue.Set(newState)
+														saveState(newState)
+													},
+													// onEdit
+													func() {
+														newState := todoStateValue.Get().SetEditing(t.ID)
+														todoStateValue.Set(newState)
+														editTextValue.Set(t.Text)
+													},
+													// onSaveEdit
+													func() {
+														currentEditText := editTextValue.Get().(string)
+														currentEditText = strings.TrimSpace(currentEditText)
+														var newState *TodoState
+														if currentEditText == "" {
+															// Delete if empty
+															newState = todoStateValue.Get().DeleteTodo(t.ID)
+														} else {
+															// Update text
+															newState = todoStateValue.Get().UpdateTodo(t.ID, currentEditText)
+														}
+														newState = newState.CancelEditing()
+														todoStateValue.Set(newState)
+														editTextValue.Set("")
+														saveState(newState)
+													},
+													// onCancelEdit
+													func() {
+														newState := todoStateValue.Get().CancelEditing()
+														todoStateValue.Set(newState)
+														editTextValue.Set("")
+													},
+													// onDelete
+													func() {
+														newState := todoStateValue.Get().DeleteTodo(t.ID)
+														todoStateValue.Set(newState)
+														saveState(newState)
+													},
+												),
+												divider.Divider(),
+											),
+										)
+									},
+								)
+							},
+							lazy.WithModifier(size.FillMaxWidth()),
+						),
+					),
+					box.WithModifier(weight.Weight(1)),
+				),
 				// Footer
-				TodoFooter(todoStateValue)(c)
-
-				return c
-			},
+				TodoFooter(todoStateValue),
+			),
 			column.WithModifier(size.FillMax()),
 		),
 		surface.WithColor(graphics.FromNRGBA(color.NRGBA{R: 245, G: 245, B: 245, A: 255})),

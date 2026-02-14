@@ -9,12 +9,12 @@ import (
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/modifiers/weight"
 	"github.com/zodimo/go-compose/pkg/api"
-	"github.com/zodimo/go-compose/store"
+	"github.com/zodimo/go-compose/state"
 )
 
 // TodoInput renders the header with toggle-all checkbox and new todo input field.
 func TodoInput(
-	todoStateValue store.TypedMutableValueInterface[*TodoState],
+	todoStateValue state.MutableValueTyped[*TodoState],
 	inputText string,
 	onInputChange func(string),
 	onSubmit func(),
