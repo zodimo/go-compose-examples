@@ -9,8 +9,8 @@ git.sr.ht/~schnwalter/gio-mw v0.0.0-20250713180710-9d8d98474447 h1:HYmUhTNys/xHf
 git.sr.ht/~schnwalter/gio-mw v0.0.0-20250713180710-9d8d98474447/go.mod h1:2delIHRFXOUBnmXbltTSUCnnbpzWawIGwQGxqw2K7p0=
 github.com/go-text/typesetting-utils v0.0.0-20250618110550-c820a94c77b8 h1:4KCscI9qYWMGTuz6BpJtbUSRzcBrUSSE0ENMJbNSrFs=
 github.com/go-text/typesetting-utils v0.0.0-20250618110550-c820a94c77b8/go.mod h1:3/62I4La/HBRX9TcTpBj4eipLiwzf+vhI+7whTc9V7o=
-github.com/zodimo/go-compose v0.1.89 h1:d31ofDHeT3PxqWBDMJW7GGDjkLjCeZ4Xy2+EyEzXRLs=
-github.com/zodimo/go-compose v0.1.89/go.mod h1:+OCrAwf+5UaURjRSrqdYtSwwfZnpEoJf2MoNnsLjiD0=
+github.com/zodimo/go-compose v0.1.92 h1:LUyQeam7IaQKarf40W11OTiuL+5Nu2ACulxtoARtGuM=
+github.com/zodimo/go-compose v0.1.92/go.mod h1:+OCrAwf+5UaURjRSrqdYtSwwfZnpEoJf2MoNnsLjiD0=
 github.com/zodimo/go-lazy v0.1.1 h1:lYsYK6eH1rbQ6VkVqPJntjiGIIoFe0Vsu4wH50j3uWE=
 github.com/zodimo/go-lazy v0.1.1/go.mod h1:+GKplxvAWyHv/XirM6KZwdHDvXBQDGGjCRpbUGlrZyg=
 github.com/zodimo/go-maybe v0.1.7 h1:FJVY486PVN5uefcy2K0b45l7d5/BDXg60s/k10kHOHc=

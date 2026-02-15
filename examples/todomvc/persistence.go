@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 )
@@ -45,11 +46,13 @@ func LoadFromFile() *TodoState {
 	path := getDataFilePath()
 	bytes, err := os.ReadFile(path)
 	if err != nil {
+		fmt.Printf("Error reading state: %v\n", err)
 		return NewTodoState()
 	}
 
 	var data persistedState
 	if err := json.Unmarshal(bytes, &data); err != nil {
+		fmt.Printf("Error unmarshalling state: %v\n", err)
 		return NewTodoState()
 	}
 

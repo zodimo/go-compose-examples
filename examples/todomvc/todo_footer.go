@@ -4,13 +4,13 @@ import (
 	"fmt"
 
 	"github.com/zodimo/go-compose/compose/foundation/layout/row"
+	"github.com/zodimo/go-compose/compose/foundation/layout/spacer"
 	"github.com/zodimo/go-compose/compose/foundation/text"
 	"github.com/zodimo/go-compose/compose/material3/button"
 	uiText "github.com/zodimo/go-compose/compose/ui/text"
 	"github.com/zodimo/go-compose/compose/ui/unit"
 	"github.com/zodimo/go-compose/modifiers/padding"
 	"github.com/zodimo/go-compose/modifiers/size"
-	"github.com/zodimo/go-compose/modifiers/weight"
 	"github.com/zodimo/go-compose/pkg/api"
 	"github.com/zodimo/go-compose/state"
 )
@@ -39,10 +39,7 @@ func TodoFooter(todoStateValue state.MutableValueTyped[*TodoState]) api.Composab
 				)(c)
 
 				// Spacer
-				row.Row(
-					func(c api.Composer) api.Composer { return c },
-					row.WithModifier(weight.Weight(1)),
-				)(c)
+				spacer.Weight(1)(c)
 
 				// Filter buttons - use c.If to get different keys for selected vs unselected
 				c.If(
@@ -80,10 +77,7 @@ func TodoFooter(todoStateValue state.MutableValueTyped[*TodoState]) api.Composab
 				)(c)
 
 				// Spacer
-				row.Row(
-					func(c api.Composer) api.Composer { return c },
-					row.WithModifier(weight.Weight(1)),
-				)(c)
+				spacer.Weight(1)(c)
 
 				// Clear completed button
 				if state.CompletedCount() > 0 {

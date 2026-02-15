@@ -12,19 +12,21 @@ import (
 	"gitub.com/zodimo/go-compose-examples/examples/book-app/book/presentation/booklist"
 )
 
-func App(c compose.Composer) compose.Composer {
-	viewModel := booklist.NewBookListViewModel()
-	return column.Column(
-		c.Sequence(
-			booklist.BookListScreenRoot(viewModel, func(book domain.Book) {
+func App() compose.Composable {
+	return func(c compose.Composer) compose.Composer {
+		viewModel := booklist.NewBookListViewModel()
+		return column.Column(
+			c.Sequence(
+				booklist.BookListScreenRoot(viewModel, func(book domain.Book) {
 
-			}),
-		),
+				}),
+			),
 
-		column.WithModifier(
-			background.Background(
-				graphics.FromNRGBA(color.NRGBA{R: 0, G: 0, B: 200, A: 200})).
-				Then(size.FillMaxHeight()),
-		),
-	)(c)
+			column.WithModifier(
+				background.Background(
+					graphics.FromNRGBA(color.NRGBA{R: 0, G: 0, B: 200, A: 200})).
+					Then(size.FillMaxHeight()),
+			),
+		)(c)
+	}
 }

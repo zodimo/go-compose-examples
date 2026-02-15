@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/zodimo/go-compose/compose"
 	"github.com/zodimo/go-compose/compose/foundation/layout/box"
 	"github.com/zodimo/go-compose/compose/foundation/layout/column"
 	"github.com/zodimo/go-compose/compose/foundation/layout/row"
@@ -57,252 +58,254 @@ func validatePassword(password string) ValidationResult {
 	return ValidationResult{Valid: true, Message: ""}
 }
 
-func UI(c api.Composer) api.Composer {
-	theme := material3.Theme(c)
-	// State for form fields
-	emailValue := c.State("email", func() any { return "" })
-	passwordValue := c.State("password", func() any { return "" })
+func UI() compose.Composable {
+	return func(c api.Composer) api.Composer {
+		theme := material3.Theme(c)
+		// State for form fields
+		emailValue := c.State("email", func() any { return "" })
+		passwordValue := c.State("password", func() any { return "" })
 
-	// State for validation errors (only shown after interaction)
-	emailTouched := c.State("emailTouched", func() any { return false })
-	passwordTouched := c.State("passwordTouched", func() any { return false })
+		// State for validation errors (only shown after interaction)
+		emailTouched := c.State("emailTouched", func() any { return false })
+		passwordTouched := c.State("passwordTouched", func() any { return false })
 
-	// State for form submission
-	submitted := c.State("submitted", func() any { return false })
-	loginSuccess := c.State("loginSuccess", func() any { return false })
+		// State for form submission
+		submitted := c.State("submitted", func() any { return false })
+		loginSuccess := c.State("loginSuccess", func() any { return false })
 
-	// Get current values
-	email := emailValue.Get().(string)
-	password := passwordValue.Get().(string)
-	isEmailTouched := emailTouched.Get().(bool)
-	isPasswordTouched := passwordTouched.Get().(bool)
-	isSubmitted := submitted.Get().(bool)
-	isLoginSuccess := loginSuccess.Get().(bool)
+		// Get current values
+		email := emailValue.Get().(string)
+		password := passwordValue.Get().(string)
+		isEmailTouched := emailTouched.Get().(bool)
+		isPasswordTouched := passwordTouched.Get().(bool)
+		isSubmitted := submitted.Get().(bool)
+		isLoginSuccess := loginSuccess.Get().(bool)
 
-	// Validate fields
-	emailValidation := validateEmail(email)
-	passwordValidation := validatePassword(password)
+		// Validate fields
+		emailValidation := validateEmail(email)
+		passwordValidation := validatePassword(password)
 
-	// Show errors only after touch or submission attempt
-	showEmailError := (isEmailTouched || isSubmitted) && !emailValidation.Valid
-	showPasswordError := (isPasswordTouched || isSubmitted) && !passwordValidation.Valid
+		// Show errors only after touch or submission attempt
+		showEmailError := (isEmailTouched || isSubmitted) && !emailValidation.Valid
+		showPasswordError := (isPasswordTouched || isSubmitted) && !passwordValidation.Valid
 
-	// Check if form is valid for submission
-	isFormValid := emailValidation.Valid && passwordValidation.Valid
+		// Check if form is valid for submission
+		isFormValid := emailValidation.Valid && passwordValidation.Valid
 
-	// Mock login handler
-	handleLogin := func() {
-		submitted.Set(true)
+		// Mock login handler
+		handleLogin := func() {
+			submitted.Set(true)
 
-		// Re-validate at submission time
-		currentEmail := strings.TrimSpace(emailValue.Get().(string))
-		currentPassword := passwordValue.Get().(string)
+			// Re-validate at submission time
+			currentEmail := strings.TrimSpace(emailValue.Get().(string))
+			currentPassword := passwordValue.Get().(string)
 
-		emailVal := validateEmail(currentEmail)
-		passwordVal := validatePassword(currentPassword)
+			emailVal := validateEmail(currentEmail)
+			passwordVal := validatePassword(currentPassword)
 
-		if emailVal.Valid && passwordVal.Valid {
-			// Mock successful login
-			// In a real app, this would make an API call
-			loginSuccess.Set(true)
+			if emailVal.Valid && passwordVal.Valid {
+				// Mock successful login
+				// In a real app, this would make an API call
+				loginSuccess.Set(true)
+			}
 		}
-	}
 
-	// Background surface
-	surface.Surface(
-		box.Box(
-			column.Column(
-				c.Sequence(
-					// App Title
-					box.Box(
-						text.Text(
-							"GoCompose Login",
-							text.WithTextStyleOptions(
-								uiText.WithFontSize(unit.Sp(32)),
-								uiText.WithColor(material3.Theme(c).ColorScheme().Primary),
+		// Background surface
+		surface.Surface(
+			box.Box(
+				column.Column(
+					c.Sequence(
+						// App Title
+						box.Box(
+							text.Text(
+								"GoCompose Login",
+								text.WithTextStyleOptions(
+									uiText.WithFontSize(unit.Sp(32)),
+									uiText.WithColor(material3.Theme(c).ColorScheme().Primary),
+								),
 							),
+							box.WithAlignment(box.Center),
 						),
-						box.WithAlignment(box.Center),
-					),
-					spacer.Height(8),
-					// Subtitle
-					box.Box(
-						text.Text(
-							"Sign in to continue",
-							text.WithTextStyleOptions(
-								uiText.WithFontSize(unit.Sp(16)),
-								uiText.WithColor(material3.Theme(c).ColorScheme().OnSurfaceVariant),
+						spacer.Height(8),
+						// Subtitle
+						box.Box(
+							text.Text(
+								"Sign in to continue",
+								text.WithTextStyleOptions(
+									uiText.WithFontSize(unit.Sp(16)),
+									uiText.WithColor(material3.Theme(c).ColorScheme().OnSurfaceVariant),
+								),
 							),
+							box.WithAlignment(box.Center),
 						),
-						box.WithAlignment(box.Center),
-					),
-					spacer.Height(32),
-					// Show success message if logged in
-					c.If(
-						isLoginSuccess,
-						c.Sequence(
-							surface.Surface(
-								box.Box(
-									column.Column(
-										c.Sequence(
-											text.Text(
-												"✓ Login Successful!",
-												text.WithTextStyleOptions(
-													uiText.WithFontSize(unit.Sp(20)),
-													uiText.WithColor(graphics.FromNRGBA(color.NRGBA{R: 46, G: 125, B: 50, A: 255})),
+						spacer.Height(32),
+						// Show success message if logged in
+						c.If(
+							isLoginSuccess,
+							c.Sequence(
+								surface.Surface(
+									box.Box(
+										column.Column(
+											c.Sequence(
+												text.Text(
+													"✓ Login Successful!",
+													text.WithTextStyleOptions(
+														uiText.WithFontSize(unit.Sp(20)),
+														uiText.WithColor(graphics.FromNRGBA(color.NRGBA{R: 46, G: 125, B: 50, A: 255})),
+													),
+												),
+												spacer.Height(8),
+												text.Text(
+													"Welcome back!",
+													text.WithTextStyleOptions(
+														uiText.WithColor(material3.Theme(c).ColorScheme().OnSurface),
+													),
 												),
 											),
-											spacer.Height(8),
-											text.Text(
-												"Welcome back!",
-												text.WithTextStyleOptions(
-													uiText.WithColor(material3.Theme(c).ColorScheme().OnSurface),
-												),
-											),
+											column.WithAlignment(column.Middle),
 										),
-										column.WithAlignment(column.Middle),
+										box.WithModifier(padding.All(24)),
+										box.WithAlignment(box.Center),
 									),
-									box.WithModifier(padding.All(24)),
+									surface.WithColor(graphics.FromNRGBA(color.NRGBA{R: 232, G: 245, B: 233, A: 255})),
+									surface.WithModifier(size.FillMaxWidth()),
+								),
+								spacer.Height(16),
+								// Logout button
+								box.Box(
+									button.Outlined(
+										func() {
+											// Reset form
+											emailValue.Set("")
+											passwordValue.Set("")
+											emailTouched.Set(false)
+											passwordTouched.Set(false)
+											submitted.Set(false)
+											loginSuccess.Set(false)
+										},
+										"Sign Out",
+									),
 									box.WithAlignment(box.Center),
 								),
-								surface.WithColor(graphics.FromNRGBA(color.NRGBA{R: 232, G: 245, B: 233, A: 255})),
-								surface.WithModifier(size.FillMaxWidth()),
 							),
-							spacer.Height(16),
-							// Logout button
-							box.Box(
-								button.Outlined(
-									func() {
-										// Reset form
-										emailValue.Set("")
-										passwordValue.Set("")
-										emailTouched.Set(false)
-										passwordTouched.Set(false)
-										submitted.Set(false)
-										loginSuccess.Set(false)
+							c.Sequence(
+								// Email field
+								textfield.TextField(
+									email,
+									func(newValue string) {
+										emailValue.Set(newValue)
+										if !isEmailTouched {
+											emailTouched.Set(true)
+										}
 									},
-									"Sign Out",
+									"Email",
+									textfield.WithError(showEmailError),
+									textfield.WithSupportingText(func() string {
+										if showEmailError {
+											return emailValidation.Message
+										}
+										return "Enter your email address"
+									}()),
+									textfield.WithSingleLine(true),
+									textfield.WithModifier(size.FillMaxWidth()),
 								),
-								box.WithAlignment(box.Center),
-							),
-						),
-						c.Sequence(
-							// Email field
-							textfield.TextField(
-								email,
-								func(newValue string) {
-									emailValue.Set(newValue)
-									if !isEmailTouched {
-										emailTouched.Set(true)
-									}
-								},
-								"Email",
-								textfield.WithError(showEmailError),
-								textfield.WithSupportingText(func() string {
-									if showEmailError {
-										return emailValidation.Message
-									}
-									return "Enter your email address"
-								}()),
-								textfield.WithSingleLine(true),
-								textfield.WithModifier(size.FillMaxWidth()),
-							),
-							spacer.Height(16),
-							// Password field
-							textfield.TextField(
-								password,
-								func(newValue string) {
-									passwordValue.Set(newValue)
-									if !isPasswordTouched {
-										passwordTouched.Set(true)
-									}
-								},
-								"Password",
-								textfield.WithError(showPasswordError),
-								textfield.WithSupportingText(func() string {
-									if showPasswordError {
-										return passwordValidation.Message
-									}
-									return "Minimum 8 characters"
-								}()),
-								textfield.WithSingleLine(true),
-								textfield.WithOnSubmit(handleLogin),
-								textfield.WithModifier(size.FillMaxWidth()),
-							),
-							spacer.Height(24),
-							// Login button
-							box.Box(
-								button.Filled(
-									handleLogin,
-									"Sign In",
-									button.WithModifier(size.Width(200)),
+								spacer.Height(16),
+								// Password field
+								textfield.TextField(
+									password,
+									func(newValue string) {
+										passwordValue.Set(newValue)
+										if !isPasswordTouched {
+											passwordTouched.Set(true)
+										}
+									},
+									"Password",
+									textfield.WithError(showPasswordError),
+									textfield.WithSupportingText(func() string {
+										if showPasswordError {
+											return passwordValidation.Message
+										}
+										return "Minimum 8 characters"
+									}()),
+									textfield.WithSingleLine(true),
+									textfield.WithOnSubmit(handleLogin),
+									textfield.WithModifier(size.FillMaxWidth()),
 								),
-								box.WithAlignment(box.Center),
-							),
-							spacer.Height(16),
-							// Form status indicator
-							c.When(
-								isSubmitted && !isFormValid,
+								spacer.Height(24),
+								// Login button
 								box.Box(
-									text.Text(
-										"Please fix the errors above",
-										text.WithTextStyleOptions(
-											uiText.WithColor(graphics.FromNRGBA(color.NRGBA{R: 176, G: 0, B: 32, A: 255})),
-										),
+									button.Filled(
+										handleLogin,
+										"Sign In",
+										button.WithModifier(size.Width(200)),
 									),
 									box.WithAlignment(box.Center),
 								),
-							),
-							spacer.Height(24),
-							// Forgot password link (styled as text button)
-							box.Box(
-								row.Row(
-									text.Text(
-										"Forgot password?",
-										text.WithTextStyleOptions(
-											uiText.WithColor(material3.Theme(c).ColorScheme().Primary),
-										),
-									),
-									row.WithAlignment(row.Middle),
-								),
-								box.WithAlignment(box.Center),
-							),
-							spacer.Height(16),
-							// Sign up prompt
-							box.Box(
-								row.Row(
-									c.Sequence(
+								spacer.Height(16),
+								// Form status indicator
+								c.When(
+									isSubmitted && !isFormValid,
+									box.Box(
 										text.Text(
-											"Don't have an account? ",
+											"Please fix the errors above",
 											text.WithTextStyleOptions(
-												uiText.WithColor(material3.Theme(c).ColorScheme().OnSurfaceVariant), //colors.SurfaceRoles.OnVariant),
+												uiText.WithColor(graphics.FromNRGBA(color.NRGBA{R: 176, G: 0, B: 32, A: 255})),
 											),
 										),
+										box.WithAlignment(box.Center),
+									),
+								),
+								spacer.Height(24),
+								// Forgot password link (styled as text button)
+								box.Box(
+									row.Row(
 										text.Text(
-											"Sign Up",
+											"Forgot password?",
 											text.WithTextStyleOptions(
 												uiText.WithColor(material3.Theme(c).ColorScheme().Primary),
 											),
 										),
+										row.WithAlignment(row.Middle),
 									),
-									row.WithAlignment(row.Middle),
+									box.WithAlignment(box.Center),
 								),
-								box.WithAlignment(box.Center),
+								spacer.Height(16),
+								// Sign up prompt
+								box.Box(
+									row.Row(
+										c.Sequence(
+											text.Text(
+												"Don't have an account? ",
+												text.WithTextStyleOptions(
+													uiText.WithColor(material3.Theme(c).ColorScheme().OnSurfaceVariant), //colors.SurfaceRoles.OnVariant),
+												),
+											),
+											text.Text(
+												"Sign Up",
+												text.WithTextStyleOptions(
+													uiText.WithColor(material3.Theme(c).ColorScheme().Primary),
+												),
+											),
+										),
+										row.WithAlignment(row.Middle),
+									),
+									box.WithAlignment(box.Center),
+								),
 							),
 						),
 					),
+					column.WithModifier(
+						size.FillMaxWidth().
+							Then(padding.Horizontal(32, 32)),
+					),
 				),
-				column.WithModifier(
-					size.FillMaxWidth().
-						Then(padding.Horizontal(32, 32)),
-				),
+				box.WithModifier(size.FillMax()),
+				box.WithAlignment(box.Center),
 			),
-			box.WithModifier(size.FillMax()),
-			box.WithAlignment(box.Center),
-		),
-		surface.WithColor(theme.ColorScheme().Surface),
-		surface.WithModifier(size.FillMax()),
-	)(c)
+			surface.WithColor(theme.ColorScheme().Surface),
+			surface.WithModifier(size.FillMax()),
+		)(c)
 
-	return c
+		return c
+	}
 }
