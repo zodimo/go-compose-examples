@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	gioui.org v0.9.0
-	github.com/zodimo/go-compose v0.1.92
+	github.com/zodimo/go-compose v0.1.94
 	github.com/zodimo/go-maybe v0.1.7
 	golang.org/x/exp/shiny v0.0.0-20260212183809-81e46e3db34a
 )

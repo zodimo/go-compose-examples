@@ -34,9 +34,10 @@ func TodoItem(
 	onDelete func(),
 ) api.Composable {
 	return func(c api.Composer) api.Composer {
-		if isEditing {
-			// Editing mode - show TextField
-			return row.Row(
+		// Editing mode - show TextField
+		return c.If(
+			isEditing,
+			row.Row(
 				c.Sequence(
 					// Editing text field
 					textfield.TextField(
@@ -73,67 +74,67 @@ func TodoItem(
 						Then(padding.Vertical(4, 4)).
 						Then(padding.Horizontal(8, 8)),
 				),
-			)(c)
-		}
-
-		// Normal display mode
-		return row.Row(
-			c.Sequence(
-				// Completion checkbox
-				checkbox.Checkbox(
-					todo.Completed,
-					func(checked bool) {
-						onToggle()
-					},
-					checkbox.WithModifier(padding.All(4)),
-				),
-				// Todo text
-				box.Box(
-					c.If(
-						todo.Completed,
-						// Completed: gray + strikethrough
-						text.Text(
-							todo.Text,
-							text.WithTextStyleOptions(
-								uiText.WithColor(graphics.FromNRGBA(color.NRGBA{R: 150, G: 150, B: 150, A: 255})),
-							),
-							text.StyleWithStrikethrough(),
-						),
-						// Active: normal color
-						text.Text(
-							todo.Text,
-							text.WithTextStyleOptions(
-								uiText.WithColor(graphics.FromNRGBA(color.NRGBA{R: 50, G: 50, B: 50, A: 255})),
-							),
-						),
-					),
-					box.WithModifier(
-						weight.Weight(1).
-							Then(padding.Horizontal(8, 8)),
-					),
-					box.WithAlignment(box.W),
-				),
-				// Edit button
-				iconbutton.Standard(
-					onEdit,
-					icons.EditorModeEdit,
-					"Edit todo",
-					iconbutton.WithModifier(padding.All(4)),
-				),
-				// Delete button
-				iconbutton.Standard(
-					onDelete,
-					icons.ActionDelete,
-					"Delete todo",
-					iconbutton.WithModifier(padding.All(4)),
-				),
 			),
-			row.WithAlignment(row.Middle),
-			row.WithModifier(
-				size.FillMaxWidth().
-					Then(padding.Vertical(4, 4)).
-					Then(padding.Horizontal(8, 8)),
+			row.Row(
+				c.Sequence(
+					// Completion checkbox
+					checkbox.Checkbox(
+						todo.Completed,
+						func(checked bool) {
+							onToggle()
+						},
+						checkbox.WithModifier(padding.All(4)),
+					),
+					// Todo text
+					box.Box(
+						c.If(
+							todo.Completed,
+							// Completed: gray + strikethrough
+							text.Text(
+								todo.Text,
+								text.WithTextStyleOptions(
+									uiText.WithColor(graphics.FromNRGBA(color.NRGBA{R: 150, G: 150, B: 150, A: 255})),
+								),
+								text.StyleWithStrikethrough(),
+							),
+							// Active: normal color
+							text.Text(
+								todo.Text,
+								text.WithTextStyleOptions(
+									uiText.WithColor(graphics.FromNRGBA(color.NRGBA{R: 50, G: 50, B: 50, A: 255})),
+								),
+							),
+						),
+						box.WithModifier(
+							weight.Weight(1).
+								Then(padding.Horizontal(8, 8)),
+						),
+						box.WithAlignment(box.W),
+					),
+					// Edit button
+					iconbutton.Standard(
+						onEdit,
+						icons.EditorModeEdit,
+						"Edit todo",
+						iconbutton.WithModifier(padding.All(4)),
+					),
+					// Delete button
+					iconbutton.Standard(
+						onDelete,
+						icons.ActionDelete,
+						"Delete todo",
+						iconbutton.WithModifier(padding.All(4)),
+					),
+				),
+				row.WithAlignment(row.Middle),
+				row.WithModifier(
+					size.FillMaxWidth().
+						Then(padding.Vertical(4, 4)).
+						Then(padding.Horizontal(8, 8)),
+				),
 			),
 		)(c)
+
 	}
+
 }
