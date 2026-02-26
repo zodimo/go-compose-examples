@@ -9,3 +9,7 @@ lint:
 breaking:
   use:
     - FILE
+
+modules:
+  - path: examples/protovalidation/proto
+    name: git/zodimo/proto

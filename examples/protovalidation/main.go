@@ -32,7 +32,7 @@ func main() {
 		w := new(app.Window)
 		w.Option(
 			app.Title("Protobuf Validation - GoCompose"),
-			app.Size(unit.Dp(400), unit.Dp(600)),
+			app.Size(unit.Dp(400), unit.Dp(800)),
 		)
 
 		if err := Run(rootContext, w); err != nil {

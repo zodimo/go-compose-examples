@@ -2,7 +2,7 @@ package screen
 
 import (
 	"gitub.com/zodimo/go-compose-examples/examples/protovalidation/form"
-	protov1 "gitub.com/zodimo/go-compose-examples/examples/protovalidation/proto/v1"
+	protov1 "gitub.com/zodimo/go-compose-examples/gen/user/v1"
 )
 
 type LoginCopyOption func(*ViewState)
@@ -15,6 +15,8 @@ func CopyLoginState(state *ViewState, options ...LoginCopyOption) *ViewState {
 	stateCopy := ViewState{
 		user:                  state.User(),
 		formState:             state.FormState(),
+		genderSelect:          state.GenderSelect(),
+		roleSelect:            state.RoleSelect(),
 		submittedSuccessfully: state.SubmittedSuccessfully(),
 	}
 	for _, option := range options {

@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package select.v1;
+
+import "google/protobuf/descriptor.proto";
+import "ui/v1/ui.proto";
+
+enum UserRole {
+  option (ui.v1.select_input) = {
+    placeholder_option: "Choose a role..."
+    label: "Role"
+  };
+
+  USER_ROLE_UNSPECIFIED = 0 [(ui.v1.select_option_label) = "UNSPECIFIED"];
+  USER_ROLE_NONE = 1 [(ui.v1.select_option_label) = "No Role"];
+  USER_ROLE_MEMBER = 2 [(ui.v1.select_option_label) = "Community Member"];
+  USER_ROLE_ADMIN = 3 [(ui.v1.select_option_label) = "System Administrator"];
+}
+
+enum Gender {
+  option (ui.v1.select_input) = {
+    placeholder_option: "-- select an option --"
+    label: "Gender"
+  };
+  option (ui.v1.exclude_unspecified) = true;
+
+  GENDER_UNSPECIFIED = 0 [(ui.v1.select_option_label) = "UNSPECIFIED"];
+  GENDER_MALE = 1 [(ui.v1.select_option_label) = "MALE"];
+  GENDER_FEMALE = 2 [(ui.v1.select_option_label) = "FEMALE"];
+  GENDER_OTHER = 3 [(ui.v1.select_option_label) = "OTHER"];
+}

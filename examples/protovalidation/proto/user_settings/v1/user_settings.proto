@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+package user_settings.v1;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/descriptor.proto";
+import "select/v1/select.proto";
+
+enum ControlType {
+  CONTROL_TYPE_UNSPECIFIED = 0;
+  CONTROL_TYPE_SLIDER = 1;
+  CONTROL_TYPE_SWITCH = 2;
+  CONTROL_TYPE_DATEPICKER = 3;
+}
+
+enum UIComponentType {
+  UI_COMPONENT_TYPE_UNSPECIFIED = 0;
+  UI_COMPONENT_TYPE_TEXT_FIELD = 1;
+  UI_COMPONENT_TYPE_TEXT_AREA = 2;
+  UI_COMPONENT_TYPE_SLIDER = 3;
+  UI_COMPONENT_TYPE_SWITCH = 4;
+  UI_COMPONENT_TYPE_DATEPICKER = 5;
+  UI_COMPONENT_TYPE_OPTION_PICKER = 6;
+  UI_COMPONENT_TYPE_OPTIONS_PICKER = 7;
+}
+
+message UIComponent {
+  UIComponentType component_type = 1;
+  string label = 2;
+  map<string, google.protobuf.Any> options = 3;
+}
+
+message UIComponentSlider {
+  int32 min = 1;
+  int32 max = 2;
+  int32 step = 3;
+}
+
+message UI {
+  ControlType control_type = 1;
+  UIComponent component = 2;
+}
+
+extend google.protobuf.FieldOptions {
+  UI ui = 50002;
+}
+
+message UserSettings {
+  bool notifications_enabled = 1 [(ui).control_type = CONTROL_TYPE_SWITCH];
+
+  int32 volume_level = 2 [
+    (buf.validate.field).int32 = {
+      gte: 0
+      lte: 100
+    },
+    (ui) = {
+      control_type: CONTROL_TYPE_SLIDER
+      component: {
+        component_type: UI_COMPONENT_TYPE_SLIDER
+        label: "Volume Level"
+      }
+    }
+  ];
+
+  string bio = 3 [
+    (buf.validate.field).string.max_len = 500,
+    (ui).component.component_type = UI_COMPONENT_TYPE_TEXT_AREA,
+    (ui).component.label = "Tell us about yourself"
+  ];
+
+  select.v1.Gender gender = 4 [
+    (ui).component.component_type = UI_COMPONENT_TYPE_OPTION_PICKER,
+    (ui).component.label = "Gender"
+  ];
+
+  repeated string interests = 5 [
+    (buf.validate.field).repeated.max_items = 5,
+    (buf.validate.field).cel = {expression: 'this.all(x , x in["Reading", "Hiking", "Coding", "Gaming"])'},
+    (ui) = {
+      component: {
+        component_type: UI_COMPONENT_TYPE_OPTIONS_PICKER
+        label: "Interests"
+        options: {key: "Reading"}
+        options: {key: "Hiking"}
+        options: {key: "Coding"}
+        options: {key: "Gaming"}
+      }
+    }
+  ];
+
+  // option (buf.validate.message).cel = {
+  //   id: "cannot_contain_space"
+  //   message: "name must not contain a space"
+  //   expression: "!this.name2.contains(' ')"
+  // };
+}

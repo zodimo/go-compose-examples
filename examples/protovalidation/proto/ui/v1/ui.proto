@@ -1,0 +1,41 @@
+edition = "2023";
+
+package ui.v1;
+
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/wrappers.proto";
+
+extend google.protobuf.FieldOptions {
+  FormInputMetadata form_input = 50000;
+}
+
+extend google.protobuf.EnumOptions {
+  SelectInputMetadata select_input = 50000;
+  bool exclude_unspecified = 50001;
+}
+
+extend google.protobuf.EnumValueOptions {
+  string select_option_label = 50000;
+}
+
+// META DATA
+message SelectInputMetadata {
+  string label = 1;
+  string placeholder_option = 2;
+}
+
+message FormInputMetadata {
+  string label = 1;
+}
+
+// DATA
+message SelectInput {
+  google.protobuf.StringValue label = 1;
+  google.protobuf.StringValue placeholder_option = 2;
+  repeated SelectInputOption options = 3;
+}
+
+message SelectInputOption {
+  string label = 1 [features.field_presence = IMPLICIT];
+  string value = 2 [features.field_presence = IMPLICIT];
+}

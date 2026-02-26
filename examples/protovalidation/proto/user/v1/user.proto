@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package user.v1;
+
+import "buf/validate/validate.proto";
+import "select/v1/select.proto";
+
+message User {
+  string name = 1 [(buf.validate.field).string.min_len = 3];
+  string email = 2 [(buf.validate.field).string.email = true];
+  int32 age = 3 [(buf.validate.field).int32.gte = 18];
+
+  select.v1.Gender gender = 4 [(buf.validate.field).required = true];
+
+  // you cannot no Exlude unspecified and make it required.
+  select.v1.UserRole role = 5;
+}

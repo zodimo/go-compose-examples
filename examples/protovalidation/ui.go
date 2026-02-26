@@ -5,8 +5,10 @@ import (
 	"github.com/zodimo/go-compose/pkg/api"
 	"github.com/zodimo/go-compose/state"
 	"gitub.com/zodimo/go-compose-examples/examples/protovalidation/form"
-	protov1 "gitub.com/zodimo/go-compose-examples/examples/protovalidation/proto/v1"
+	"gitub.com/zodimo/go-compose-examples/examples/protovalidation/proto/ui"
 	"gitub.com/zodimo/go-compose-examples/examples/protovalidation/screen"
+	selectv1 "gitub.com/zodimo/go-compose-examples/gen/select/v1"
+	protov1 "gitub.com/zodimo/go-compose-examples/gen/user/v1"
 )
 
 func UI() compose.Composable {
@@ -20,9 +22,6 @@ func UI() compose.Composable {
 			func() *protov1.User {
 				return &protov1.User{}
 			},
-			state.WithTypedCompare(func(a, b *protov1.User) bool {
-				return a.Name == b.Name && a.Email == b.Email && a.Age == b.Age
-			}),
 		)
 
 		submittedSuccessfullyValue := state.MustRemember(c, "submitted-successfully", func() bool {
@@ -34,6 +33,8 @@ func UI() compose.Composable {
 				userModel,
 				formStateValue,
 				submittedSuccessfullyValue,
+				ui.GetSelectInputFromEnum(selectv1.Gender_GENDER_UNSPECIFIED.Descriptor()),
+				ui.GetSelectInputFromEnum(selectv1.UserRole_USER_ROLE_UNSPECIFIED.Descriptor()),
 			)
 		})
 

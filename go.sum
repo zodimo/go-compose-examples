@@ -31,8 +31,8 @@ github.com/rodaine/protogofakeit v0.1.1 h1:ZKouljuRM3A+TArppfBqnH8tGZHOwM/pjvtXe
 github.com/rodaine/protogofakeit v0.1.1/go.mod h1:pXn/AstBYMaSfc1/RqH3N82pBuxtWgejz1AlYpY1mI0=
 github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu7U=
 github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
-github.com/zodimo/go-compose v0.1.96 h1:cTwhPr6GxVLNQvb2PsGxb/meFKtCyyIr8qGPBsPFHAg=
-github.com/zodimo/go-compose v0.1.96/go.mod h1:+OCrAwf+5UaURjRSrqdYtSwwfZnpEoJf2MoNnsLjiD0=
+github.com/zodimo/go-compose v0.1.97 h1:mZ0GQr0jqIIZQMsUfPmsAWUHqFjR6n0ZfxfrTYwKQwc=
+github.com/zodimo/go-compose v0.1.97/go.mod h1:+OCrAwf+5UaURjRSrqdYtSwwfZnpEoJf2MoNnsLjiD0=
 github.com/zodimo/go-lazy v0.1.1 h1:lYsYK6eH1rbQ6VkVqPJntjiGIIoFe0Vsu4wH50j3uWE=
 github.com/zodimo/go-lazy v0.1.1/go.mod h1:+GKplxvAWyHv/XirM6KZwdHDvXBQDGGjCRpbUGlrZyg=
 github.com/zodimo/go-maybe v0.1.7 h1:FJVY486PVN5uefcy2K0b45l7d5/BDXg60s/k10kHOHc=

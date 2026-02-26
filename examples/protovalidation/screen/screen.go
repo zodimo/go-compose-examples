@@ -10,10 +10,14 @@ import (
 	"github.com/zodimo/go-compose/compose/foundation/text"
 	"github.com/zodimo/go-compose/compose/material3"
 	"github.com/zodimo/go-compose/compose/material3/button"
+	"github.com/zodimo/go-compose/compose/material3/icon"
+	"github.com/zodimo/go-compose/compose/material3/menu"
 	"github.com/zodimo/go-compose/compose/material3/surface"
+
 	"github.com/zodimo/go-compose/compose/material3/textfield"
 	uiText "github.com/zodimo/go-compose/compose/ui/text"
 	"github.com/zodimo/go-compose/compose/ui/unit"
+	"github.com/zodimo/go-compose/modifiers/clickable"
 	"github.com/zodimo/go-compose/modifiers/padding"
 	"github.com/zodimo/go-compose/modifiers/size"
 	"github.com/zodimo/go-compose/pkg/api"
@@ -43,6 +47,39 @@ func Screen(viewState *ViewState, actions Actions, onAction func(Action)) compos
 		formStateValue := state.MustRemember(c, "form-state", func() form.FormState {
 			return form.NewFormState()
 		})
+
+		expandedGender := state.MustRemember(c, "gender-menu", func() bool { return false })
+		expandedRole := state.MustRemember(c, "role-menu", func() bool { return false })
+
+		genderMenuItems := state.MustRemember(c, "gender-menu-items", func() []api.Composable {
+			var items []api.Composable
+			for _, v := range viewState.GenderSelect().Options {
+				items = append(items, menu.DropdownMenuItem(
+					v.Label,
+					func() {
+						expandedGender.Set(false)
+						onAction(actions.FieldOnChange("gender", v.Value))
+					},
+				))
+			}
+
+			return items
+		}).Get()
+
+		roleMenuItems := state.MustRemember(c, "role-menu-items", func() []api.Composable {
+			var items []api.Composable
+			for _, v := range viewState.RoleSelect().Options {
+				items = append(items, menu.DropdownMenuItem(
+					v.Label,
+					func() {
+						expandedRole.Set(false)
+						onAction(actions.FieldOnChange("role", v.Value))
+					},
+				))
+			}
+
+			return items
+		}).Get()
 
 		formState := formStateValue.Get()
 
@@ -128,6 +165,62 @@ func Screen(viewState *ViewState, actions Actions, onAction func(Action)) compos
 									textfield.WithSupportingText(formState.GetError("age")),
 									textfield.WithSingleLine(true),
 									textfield.WithModifier(size.FillMaxWidth()),
+								),
+								spacer.Height(24),
+								//Gender
+								textfield.Filled(
+									viewState.GenderLabelForSelectedOption(person.Gender),
+									func(newValue string) {},
+									textfield.WithLabel(viewState.GenderSelect().Label.GetValue()),
+									textfield.WithPlaceholder(viewState.GenderSelect().PlaceholderOption.GetValue()),
+									textfield.WithError(formState.GetError("gender") != ""),
+									textfield.WithSupportingText(formState.GetError("gender")),
+									textfield.WithSingleLine(true),
+									textfield.WithModifier(size.FillMaxWidth()),
+									textfield.WithReadOnly(true),
+									textfield.WithTrailingIcon(
+										icon.Icon(
+											icon.SymbolArrowDropDown,
+											icon.WithModifier(clickable.OnClick(func() {
+												expandedGender.Set(true)
+											})),
+										),
+									),
+								),
+								menu.DropdownMenu(
+									expandedGender.Get(),
+									func() { expandedGender.Set(false) },
+									menu.MenuItems(
+										genderMenuItems...,
+									),
+								),
+								spacer.Height(24),
+								//Role
+								textfield.Filled(
+									viewState.RoleLabelForSelectedOption(person.Role),
+									func(newValue string) {},
+									textfield.WithLabel(viewState.RoleSelect().Label.GetValue()),
+									textfield.WithPlaceholder(viewState.RoleSelect().PlaceholderOption.GetValue()),
+									textfield.WithError(formState.GetError("role") != ""),
+									textfield.WithSupportingText(formState.GetError("role")),
+									textfield.WithSingleLine(true),
+									textfield.WithModifier(size.FillMaxWidth()),
+									textfield.WithReadOnly(true),
+									textfield.WithTrailingIcon(
+										icon.Icon(
+											icon.SymbolArrowDropDown,
+											icon.WithModifier(clickable.OnClick(func() {
+												expandedRole.Set(true)
+											})),
+										),
+									),
+								),
+								menu.DropdownMenu(
+									expandedRole.Get(),
+									func() { expandedRole.Set(false) },
+									menu.MenuItems(
+										roleMenuItems...,
+									),
 								),
 								spacer.Height(24),
 								button.Filled(func() {

@@ -6,7 +6,7 @@ import (
 
 	"buf.build/go/protovalidate"
 	"gitub.com/zodimo/go-compose-examples/examples/protovalidation/form"
-	protov1 "gitub.com/zodimo/go-compose-examples/examples/protovalidation/proto/v1"
+	protov1 "gitub.com/zodimo/go-compose-examples/gen/user/v1"
 )
 
 func BenchmarkProtovalidate_Precompiled(b *testing.B) {
