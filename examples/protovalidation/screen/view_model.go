@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"buf.build/go/protovalidate"
+	"github.com/zodimo/go-compose/compose/viewmodel"
 	"github.com/zodimo/go-compose/pkg/flow"
 	"github.com/zodimo/go-compose/state"
 	"gitub.com/zodimo/go-compose-examples/examples/protovalidation/form"
@@ -17,6 +18,7 @@ import (
 )
 
 type ViewModel struct {
+	viewmodel.ViewModel
 	mutableState *flow.MutableStateFlow[*ViewState]
 
 	rootContext context.Context
@@ -48,7 +50,7 @@ func NewViewModel(
 		log.Fatal(err)
 	}
 
-	vm := &ViewModel{
+	return &ViewModel{
 		mutableState: flow.NewMutableStateFlow(
 			NewViewState(
 				userProtoValue.Get(),
@@ -65,7 +67,6 @@ func NewViewModel(
 		genderSelect:          genderSelect,
 		roleSelect:            roleSelect,
 	}
-	return vm
 }
 
 func (vm *ViewModel) OnAction(action Action) {
