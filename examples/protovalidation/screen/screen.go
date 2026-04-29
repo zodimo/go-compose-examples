@@ -237,9 +237,154 @@ func Screen(viewState *ViewState, actions Actions, onAction func(Action)) compos
 				box.WithModifier(size.FillMax()),
 				box.WithAlignment(box.Center),
 			),
-			surface.WithColor(theme.ColorScheme().Surface),
 			surface.WithModifier(size.FillMax()),
 		)(c)
+
+		// box.Box(
+		// 		column.Column(
+		// 			c.Sequence(
+		// 				// App Title
+		// 				box.Box(
+		// 					text.Text(
+		// 						"Registration Form",
+		// 						text.WithTextStyleOptions(
+		// 							uiText.WithFontSize(unit.Sp(32)),
+		// 							uiText.WithColor(theme.ColorScheme().Primary),
+		// 						),
+		// 					),
+		// 					box.WithAlignment(box.Center),
+		// 				),
+		// 				spacer.Height(8),
+		// 				// Subtitle
+		// 				box.Box(
+		// 					text.Text(
+		// 						"Please fill in the form below",
+		// 						text.WithTextStyleOptions(
+		// 							uiText.WithFontSize(unit.Sp(16)),
+		// 							uiText.WithColor(theme.ColorScheme().OnSurfaceVariant),
+		// 						),
+		// 					),
+		// 					box.WithAlignment(box.Center),
+		// 				),
+		// 				spacer.Height(32),
+		// 				c.If(viewState.SubmittedSuccessfully(),
+		// 					box.Box(
+		// 						text.Text(
+		// 							"Form Submitted Successfully!",
+		// 							text.WithTextStyleOptions(
+		// 								uiText.WithFontSize(unit.Sp(20)),
+		// 								uiText.WithColor(theme.ColorScheme().Primary),
+		// 							),
+		// 						),
+		// 						box.WithAlignment(box.Center),
+		// 					),
+		// 					c.Sequence(
+		// 						textfield.Filled(
+		// 							person.Name,
+		// 							func(value string) {
+		// 								onAction(actions.FieldOnChange("name", value))
+		// 							},
+		// 							textfield.WithLabel("Name"),
+		// 							textfield.WithError(formState.GetError("name") != ""),
+		// 							textfield.WithSupportingText(formState.GetError("name")),
+		// 							textfield.WithSingleLine(true),
+		// 							textfield.WithModifier(size.FillMaxWidth()),
+		// 						),
+		// 						spacer.Height(16),
+		// 						textfield.Filled(
+		// 							person.Email,
+		// 							func(newValue string) {
+		// 								onAction(actions.FieldOnChange("email", newValue))
+		// 							},
+		// 							textfield.WithLabel("Email"),
+		// 							textfield.WithError(formState.GetError("email") != ""),
+		// 							textfield.WithSupportingText(formState.GetError("email")),
+		// 							textfield.WithSingleLine(true),
+		// 							textfield.WithModifier(size.FillMaxWidth()),
+		// 						),
+		// 						spacer.Height(16),
+		// 						textfield.Filled(
+		// 							ageStr,
+		// 							func(newValue string) {
+		// 								onAction(actions.FieldOnChange("age", newValue))
+		// 							},
+		// 							textfield.WithLabel("Age"),
+		// 							textfield.WithError(formState.GetError("age") != ""),
+		// 							textfield.WithSupportingText(formState.GetError("age")),
+		// 							textfield.WithSingleLine(true),
+		// 							textfield.WithModifier(size.FillMaxWidth()),
+		// 						),
+		// 						spacer.Height(24),
+		// 						//Gender
+		// 						textfield.Filled(
+		// 							viewState.GenderLabelForSelectedOption(person.Gender),
+		// 							func(newValue string) {},
+		// 							textfield.WithLabel(viewState.GenderSelect().Label.GetValue()),
+		// 							textfield.WithPlaceholder(viewState.GenderSelect().PlaceholderOption.GetValue()),
+		// 							textfield.WithError(formState.GetError("gender") != ""),
+		// 							textfield.WithSupportingText(formState.GetError("gender")),
+		// 							textfield.WithSingleLine(true),
+		// 							textfield.WithModifier(size.FillMaxWidth()),
+		// 							textfield.WithReadOnly(true),
+		// 							textfield.WithTrailingIcon(
+		// 								icon.Icon(
+		// 									icon.SymbolArrowDropDown,
+		// 									icon.WithModifier(clickable.OnClick(func() {
+		// 										expandedGender.Set(true)
+		// 									})),
+		// 								),
+		// 							),
+		// 						),
+		// 						menu.DropdownMenu(
+		// 							expandedGender.Get(),
+		// 							func() { expandedGender.Set(false) },
+		// 							menu.MenuItems(
+		// 								genderMenuItems...,
+		// 							),
+		// 						),
+		// 						spacer.Height(24),
+		// 						//Role
+		// 						textfield.Filled(
+		// 							viewState.RoleLabelForSelectedOption(person.Role),
+		// 							func(newValue string) {},
+		// 							textfield.WithLabel(viewState.RoleSelect().Label.GetValue()),
+		// 							textfield.WithPlaceholder(viewState.RoleSelect().PlaceholderOption.GetValue()),
+		// 							textfield.WithError(formState.GetError("role") != ""),
+		// 							textfield.WithSupportingText(formState.GetError("role")),
+		// 							textfield.WithSingleLine(true),
+		// 							textfield.WithModifier(size.FillMaxWidth()),
+		// 							textfield.WithReadOnly(true),
+		// 							textfield.WithTrailingIcon(
+		// 								icon.Icon(
+		// 									icon.SymbolArrowDropDown,
+		// 									icon.WithModifier(clickable.OnClick(func() {
+		// 										expandedRole.Set(true)
+		// 									})),
+		// 								),
+		// 							),
+		// 						),
+		// 						menu.DropdownMenu(
+		// 							expandedRole.Get(),
+		// 							func() { expandedRole.Set(false) },
+		// 							menu.MenuItems(
+		// 								roleMenuItems...,
+		// 							),
+		// 						),
+		// 						spacer.Height(24),
+		// 						button.Filled(func() {
+		// 							onAction(actions.OnSubmit())
+		// 						}, "Submit", button.WithModifier(size.FillMaxWidth())),
+		// 					),
+		// 				),
+		// 			),
+		// 			column.WithModifier(
+		// 				size.FillMaxWidth().
+		// 					Then(padding.Horizontal(32, 32)),
+		// 			),
+		// 		),
+		// 		box.WithModifier(size.FillMax()),
+		// 		box.WithAlignment(box.Center),
+		// 	)(c)
 
 		return c
 	}
